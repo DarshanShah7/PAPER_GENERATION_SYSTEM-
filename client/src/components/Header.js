@@ -7,16 +7,25 @@ class Header extends Component {
         this.onChangeUserName = this.onChangeUserName.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeUserNameSignup = this.onChangeUserNameSignup.bind(this);
+        this.onChangePasswordSignup = this.onChangePasswordSignup.bind(this);
+        this.onChangeroleSignup = this.onChangeroleSignup.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
+        this.onSubmitSignup = this.onSubmitSignup.bind(this);
 
         this.state = {
             name: '',
             password: '',
+            nameSignup:'',
+            passwordSignup:'',
+            roleSignup:''
         }
     }
 
     onChangeUserName(e) {
         this.setState({ name: e.target.value })
     }
+
 
     onChangePassword(e) {
         this.setState({ password: e.target.value })
@@ -26,8 +35,8 @@ class Header extends Component {
         e.preventDefault()
 
         const userObject = {
-            name: this.state.name,
-            email: this.state.password
+            username: this.state.name,
+            password: this.state.password
         };
         console.log("Hello ");
         axios.post('http://localhost:5000/login', userObject)
@@ -40,6 +49,44 @@ class Header extends Component {
 
         this.setState({ name: '', password: '' })
     }
+    onChangeUserNameSignup(e) {
+        this.setState({ nameSignup: e.target.value })
+    }
+
+
+    onChangePasswordSignup(e) {
+        this.setState({ passwordSignup: e.target.value })
+    }
+    onChangeroleSignup(e) {
+        this.setState({ roleSignup: e.target.value })
+    }
+
+    onSubmitSignup(e) {
+        e.preventDefault()
+
+        const userObject = {
+            username: this.state.nameSignup,
+            password: this.state.passwordSignup,
+            role: this.state.roleSignup
+        };
+        console.log("Hello ");
+        axios.post('http://localhost:5000/signup', userObject)
+            .then((res) => {
+                console.log(res.data)
+                // res.send("DEBUG");
+            }).catch((error) => {
+                console.log(error)
+            });
+
+        this.setState({ nameSignup: '', passwordSignup: '' ,roleSignup:''})
+    }
+
+    onRadioChange = (e) => {
+        this.setState({
+          roleSignup: e.target.value
+        });
+      }
+    
     state = {}
     render() {
         return (
@@ -164,24 +211,24 @@ class Header extends Component {
                                                 <h4>Sign-Up</h4>
                                             </div>
                                             <div className="d-flex flex-column text-center">
-                                                <form action="/signup" method="POST">
+                                                <form onSubmit={this.onSubmitSignup}>
                                                     <div className="form-group">
-                                                        <input type="text" name="username" className="form-control" id="email1" placeholder="Enter username..." />
+                                                        <input type="text" name="username" className="form-control" id="email1" value={this.state.nameSignup} onChange={this.onChangeUserNameSignup} placeholder="Enter username..." />
                                                     </div>
                                                     <div className="form-group">
-                                                        <input type="password" name="password" className="form-control" id="password1" placeholder="Your password..." />
+                                                        <input type="password" name="password" className="form-control" id="password1" value={this.state.passwordSignup} onChange={this.onChangePasswordSignup} placeholder="Your password..." />
                                                     </div>
                                                     <div id="user">
 
                                                         <label className="radio-inline" id="teacherInput">
 
-                                                            <input type="radio" value="teacher" name="role"  id="teacherButton" />Teacher
+                                                            <input type="radio" value="teacher" name="role"  checked={this.state.roleSignup === "teacher"} onChange={this.onRadioChange} id="teacherButton" />Teacher
 
                                             </label>
 
                                                         <label className="radio-inline" id="studentInput">
 
-                                                            <input type="radio" value="student" name="role" id="studentButton" />Student
+                                                            <input type="radio" value="student" name="role" checked={this.state.roleSignup === "student"} onChange={this.onRadioChange} id="studentButton" />Student
 
                                             </label>
 

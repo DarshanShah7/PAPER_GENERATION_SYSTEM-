@@ -7,7 +7,8 @@ const cors = require('cors');
 
 // app.use(cors());
 
-router.post('/signup', async(req, res, next) => {
+router.post('/signup',cors(), async(req, res, next) => {
+    console.log(req.body);
     const { username, password, role } = req.body;
     const user = new User({ username, role });
     const registeredUser = await User.register(user, password);
@@ -16,7 +17,14 @@ router.post('/signup', async(req, res, next) => {
         console.log('before flash');
         // res.flash('success', 'Welcome to Yelp Camp!');
         console.log('after flash');
-        res.redirect('/');
+        // res.redirect('/');
+        const customers = [
+            {id: 1, firstName: 'John', lastName: 'Doe'},
+            {id: 2, firstName: 'Brad', lastName: 'Traversy'},
+            {id: 3, firstName: 'Mary', lastName: 'Swanson'},
+          ];
+          console.log(req.body);
+          res.json(customers);
     })
 
 })
@@ -30,8 +38,8 @@ router.get('/logout', isLoggedIn, (req, res) => {
 })
 
 
-
-router.post('/login',cors(), passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+// passport.authenticate('local',{ failureFlash: true, failureRedirect: '/' }
+router.post('/login',cors(),passport.authenticate('local',{ failureFlash: true, failureRedirect: '/' }), (req, res) => {
     // req.flash('success', 'welcome back!');
     // const redirectUrl = req.session.returnTo || '/campgrounds';
     // delete req.session.returnTo;
@@ -41,9 +49,10 @@ router.post('/login',cors(), passport.authenticate('local', { failureFlash: true
         {id: 2, firstName: 'Brad', lastName: 'Traversy'},
         {id: 3, firstName: 'Mary', lastName: 'Swanson'},
       ];
-    
+      console.log(req.body);
       res.json(customers);
 })
 
 module.exports = router
 
+// 
