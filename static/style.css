@@ -1,0 +1,67 @@
+#login-button {
+  margin-right: 5px;
+}
+
+.container {
+  padding: 2rem 0rem;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 400px;
+
+    /* .modal-content {
+    
+    padding: 1rem;
+    
+    } */
+  }
+}
+
+.modal-header {
+  /* .close {
+    
+    margin-top: -1.5rem;
+    
+    } */
+}
+
+.form-title {
+  margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+  border-radius: 3rem;
+}
+
+.delimiter {
+  padding: 1rem;
+}
+
+.signup-section {
+  padding: 0.3rem 0rem;
+}
+
+#navigationBar {
+  font-size: 20px;
+}
+
+#user {
+  display: flex;
+}
+
+#teacherInput {
+  margin-right: 45px;
+}
+
+#studentInput {
+  margin-right: 5px;
+}
+
+#teacherButton {
+  margin-right: 5px;
+}
+
+#studentButton {
+  margin-right: 10px;
+}

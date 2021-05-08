@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/style.css">
+
+    <!-- 
+        <script src='jquery-3.2.1.min.js'></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+    <script type="text/javascript" src="static/index.js"></script>
+
+
+    <title>Document</title>
+
+</head>
+
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#">Link</a>
+
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        Dropdown
+
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <a class="dropdown-item" href="#">Action</a>
+
+                        <a class="dropdown-item" href="#">Another action</a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a class="dropdown-item" href="#">Something else here</a>
+
+                    </div>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link disabled" href="#">Disabled</a>
+
+                </li>
+
+            </ul>
+
+            <div class="login">
+                <!-- <div class="container"> -->
+                <button type="button" class="btn  btn-round btn-primary my-2 my-sm-0 " id="login-button"
+                    data-toggle="modal" data-target="#loginModal">
+                    Login
+                </button>
+                <!-- </div> -->
+
+                <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-title text-center">
+                                    <h4>Login</h4>
+                                </div>
+                                <div class="d-flex flex-column text-center">
+                                    <form action="/login" , method="POST">
+                                        <div class="form-group">
+                                            <input type="text" name="username" class="form-control" id="email1"
+                                                placeholder="Enter username...">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control" id="password1"
+                                                placeholder="Your password...">
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
+                                    </form>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-success my-2 my-sm-0 " type="submit " id="signup-button ">Sign-Up</button>
+
+                </div>
+
+
+
+                <button type="button" class="btn  btn-round btn-success my-2 my-sm-0 " id="login-button"
+                    data-toggle="modal" data-target="#signUpModal">
+                    Sign-up
+                </button>
+                <!-- </div> -->
+
+                <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-title text-center">
+                                    <h4>Sign-Up</h4>
+                                </div>
+                                <div class="d-flex flex-column text-center">
+                                    <form action="/signup" , method="POST">
+                                        <div class="form-group">
+                                            <input type="text" name="username" class="form-control" id="email1"
+                                                placeholder="Enter username...">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control" id="password1"
+                                                placeholder="Your password...">
+                                        </div>
+                                        <div id="user">
+
+                                            <label class="radio-inline" id="teacherInput">
+
+                                                <input type="radio" value="teacher" name="role" checked
+                                                    id="teacherButton">Teacher
+
+                                            </label>
+
+                                            <label class="radio-inline" id="studentInput">
+
+                                                <input type="radio" value="student" name="role"
+                                                    id="studentButton">Student
+
+                                            </label>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-info btn-block btn-round">Sign Up</button>
+                                    </form>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-success my-2 my-sm-0 " type="submit " id="signup-button ">Sign-Up</button>
+
+                </div>
+
+            </div>
+
+
+
+    </nav>
+
+</body>
+
+
+
+</html>
