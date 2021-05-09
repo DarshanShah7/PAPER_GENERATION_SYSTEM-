@@ -32,25 +32,41 @@ router.post('/signup',cors(), async(req, res, next) => {
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
 
-    req.flash('success', "Goodbye!");
-    // res.send("LOGGED OUT");
-    res.redirect('/');
+    // req.flash('success', "Goodbye!");
+    // // res.send("LOGGED OUT");
+    // res.redirect('/');
+    const customers = [
+        {id: 1, firstName: 'John', lastName: 'Doe'},
+        {id: 2, firstName: 'Brad', lastName: 'Traversy'},
+      ];
+      console.log(req.body);
+      res.json(customers);
 })
 
+// app.get('/login', function(req, res, next) {
+//     passport.authenticate('local', function(err, user, info) {
+//       if (err) { return next(err); }
+//       if (!user) { return res.redirect('/login'); }
+//       req.logIn(user, function(err) {
+//         if (err) { return next(err); }
+//         return res.redirect('/users/' + user.username);
+//       });
+//     })(req, res, next);
+//   });
 
 // passport.authenticate('local',{ failureFlash: true, failureRedirect: '/' }
-router.post('/login',cors(),passport.authenticate('local',{ failureFlash: true, failureRedirect: '/' }), (req, res) => {
+router.post('/login',cors(), (req, res, next) => {
+    passport.authenticate('local', function(err, user, info) {
+        if (!user) {  res.json({value:"0"}); }
+        else{
+            res.json({value:"1"});
+        }
+    })(req, res, next);
     // req.flash('success', 'welcome back!');
     // const redirectUrl = req.session.returnTo || '/campgrounds';
     // delete req.session.returnTo;
     // res.redirect('/login');
-    const customers = [
-        {id: 1, firstName: 'John', lastName: 'Doe'},
-        {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-        {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-      ];
-      console.log(req.body);
-      res.json(customers);
+    
 })
 
 module.exports = router

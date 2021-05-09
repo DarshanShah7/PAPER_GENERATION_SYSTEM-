@@ -1,107 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// import { Redirect } from "react-router-dom";
-class Header extends Component {
+class Header2 extends Component {
     constructor(props) {
         super(props)
 
-        this.onChangeUserName = this.onChangeUserName.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChangeUserNameSignup = this.onChangeUserNameSignup.bind(this);
-        this.onChangePasswordSignup = this.onChangePasswordSignup.bind(this);
-        this.onChangeroleSignup = this.onChangeroleSignup.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onSubmitSignup = this.onSubmitSignup.bind(this);
-
-        this.state = {
-            name: '',
-            password: '',
-            nameSignup: '',
-            passwordSignup: '',
-            roleSignup: ''
-        }
+        this.onSubmitLogout = this.onSubmitLogout.bind(this);
     }
-
-    onChangeUserName(e) {
-        this.setState({ name: e.target.value })
-    }
-
-
-    onChangePassword(e) {
-        this.setState({ password: e.target.value })
-    }
-
-    onSubmit(e) {
+    onSubmitLogout(e) {
         e.preventDefault()
-
-        const userObject = {
-            username: this.state.name,
-            password: this.state.password
-        };
-        console.log("Hello ");
-        axios.post('http://localhost:5000/login', userObject)
+        
+        axios.get('http://localhost:5000/logout')
             .then((res) => {
-                // console.log(res.data.value);
-                // console.log(this.props.loginstatus());
-                if(res.data.value === '1'){
-                    this.props.login();
-                    window.location.assign('/login');
-                }else{
-                    alert("invalid username or password");
-                }
-                // console.log(this.props.loginstatus());
-                // console.log("done");
-                // window.location.assign('/login');
-               
-                
-                // res.send("DEBUG");
+                // console.log(this.props);
+                this.props.logout();
             }).catch((error) => {
                 console.log(error)
             });
 
-        this.setState({ name: '', password: '' })
-    }
-    onChangeUserNameSignup(e) {
-        this.setState({ nameSignup: e.target.value })
     }
 
-
-    onChangePasswordSignup(e) {
-        this.setState({ passwordSignup: e.target.value })
-    }
-    onChangeroleSignup(e) {
-        this.setState({ roleSignup: e.target.value })
-    }
-
-    onSubmitSignup(e) {
-        e.preventDefault()
-
-        const userObject = {
-            username: this.state.nameSignup,
-            password: this.state.passwordSignup,
-            role: this.state.roleSignup
-        };
-        console.log("Hello ");
-        axios.post('http://localhost:5000/signup', userObject)
-            .then((res) => {
-                console.log(res.data);
-                
-                // res.send("DEBUG");
-            }).catch((error) => {
-                console.log(error)
-            });
-
-        this.setState({ nameSignup: '', passwordSignup: '', roleSignup: '' })
-    }
-
-    onRadioChange = (e) => {
-        this.setState({
-            roleSignup: e.target.value
-        });
-    }
-
+    
     state = {}
     render() {
         return (
@@ -116,7 +35,7 @@ class Header extends Component {
 
                     </button>
 
-
+                    
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -139,6 +58,7 @@ class Header extends Component {
                                 <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                     Dropdown
+                                    
 </a>
 
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -164,7 +84,7 @@ class Header extends Component {
                         </ul>
 
                         <div className="login">
-
+{/* 
                             <button type="button" className="btn  btn-round btn-primary my-2 my-sm-0 " id="login-button" data-toggle="modal" data-target="#loginModal">
                                 Login
                                 </button>
@@ -183,7 +103,7 @@ class Header extends Component {
                                                 <h4>Login</h4>
                                             </div>
                                             <div className="d-flex flex-column text-center">
-                                                <form onSubmit={this.onSubmit}>
+                                                <form  onSubmit={this.onSubmit}>
                                                     <div className="form-group">
                                                         <input type="text" name="username" className="form-control" id="email1" value={this.state.name} onChange={this.onChangeUserName} placeholder="Enter username..." />
                                                     </div>
@@ -204,16 +124,16 @@ class Header extends Component {
 
                                 <button className="btn btn-success my-2 my-sm-0 " type="submit " id="signup-button ">Sign-Up</button>
 
-                            </div>
+                            </div> */}
 
 
 
-                            <button type="button" className="btn  btn-round btn-success my-2 my-sm-0 " id="login-button" data-toggle="modal" data-target="#signUpModal">
-                                Sign-up
+                        <button type="button" onClick={this.onSubmitLogout} className="btn  btn-round btn-success my-2 my-sm-0 " id="logout-button" >
+                                logout
                       </button>
 
 
-                            <div className="modal fade" id="signUpModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            {/* <div className="modal fade" id="signUpModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog modal-dialog-centered" role="document">
                                     <div className="modal-content">
                                         <div className="modal-header border-bottom-0">
@@ -237,7 +157,7 @@ class Header extends Component {
 
                                                         <label className="radio-inline" id="teacherInput">
 
-                                                            <input type="radio" value="teacher" name="role" checked={this.state.roleSignup === "teacher"} onChange={this.onRadioChange} id="teacherButton" />Teacher
+                                                            <input type="radio" value="teacher" name="role"  checked={this.state.roleSignup === "teacher"} onChange={this.onRadioChange} id="teacherButton" />Teacher
 
                                             </label>
 
@@ -261,7 +181,7 @@ class Header extends Component {
 
                                 <button className="btn btn-success my-2 my-sm-0 " type="submit " id="signup-button ">Sign-Up</button>
 
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -273,4 +193,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default Header2;

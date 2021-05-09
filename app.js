@@ -8,6 +8,7 @@ const userRoutes = require('./routes/users'); //for router
 const teacherRoutes = require('./routes/teacher');
 const cors = require('cors');
 
+
 const passportLocalMongoose = require('passport-local-mongoose');
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
