@@ -44,14 +44,14 @@ class Header extends Component {
         axios.post('http://localhost:5000/login', userObject)
             .then((res) => {
                 // console.log(res.data.value);
-                // console.log(this.props.loginstatus());
+                console.log(this.props.loginstatus());
                 if(res.data.value === '1'){
                     this.props.login();
                     window.location.assign('/login');
                 }else{
                     alert("invalid username or password");
                 }
-                // console.log(this.props.loginstatus());
+                console.log(this.props.loginstatus());
                 // console.log("done");
                 // window.location.assign('/login');
                

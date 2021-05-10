@@ -146,12 +146,13 @@ class Question extends Component {
                 }
             }
         }
+        document.getElementById("question-form").reset();
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.FormSubmit}>
+                <form onSubmit={this.FormSubmit} id = "question-form">
                     <div className="question-paramters">
 
                         <div className="question-paramters-1" >

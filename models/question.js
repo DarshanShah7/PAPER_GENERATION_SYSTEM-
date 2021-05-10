@@ -7,5 +7,6 @@ const questionSchema = new mongoose.Schema({
     Numerical: []
 });
 
+const conn = mongoose.createConnection('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
 
-module.exports = mongoose.model('Question', questionSchema);
+module.exports = conn.model('Question', questionSchema);

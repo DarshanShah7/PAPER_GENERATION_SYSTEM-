@@ -17,43 +17,44 @@ router.post('/savequestion', cors(), (req, res) => {
 
     console.log(req.body);
 
-        // Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
-        //     // console.log("debug1")
-        //     if (err) {
-        //         console.log(err);
-        //         // console.log("debug2")
-        //     }
-        //     else {
-        //         if (docs.length === 0) {
-        //             // console.log("debug3")
-        //             const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
-        //             await newpaper.save();
-        //         }
-        //         let query;
-        //         if (req.body.question.questiontype === 'Single-Correct') {
-        //             query = {$push: { SingleCorrect: req.body.question }};
-        //         }
-        //         if (req.body.question.questiontype === 'Multiple-Correct') {
-        //             query = {$push: { MultipleCorrect: req.body.question }};
-        //         }
-        //         if (req.body.question.questiontype === 'Numerical') {
-        //             query = {$push: { Numerical: req.body.question }};
-        //         }
+        Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
+            console.log("debug1")
+            if (err) {
+                console.log(err);
+                // console.log("debug2")
+            }
+            else {
+                //  console.log(docs)
+                if (docs.length === 0) {
+                    // console.log(docs)
+                    const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
+                    await newpaper.save();
+                }
+                let query;
+                if (req.body.question.questiontype === 'Single-Correct') {
+                    query = {$push: { SingleCorrect: req.body.question }};
+                }
+                if (req.body.question.questiontype === 'Multiple-Correct') {
+                    query = {$push: { MultipleCorrect: req.body.question }};
+                }
+                if (req.body.question.questiontype === 'Numerical') {
+                    query = {$push: { Numerical: req.body.question }};
+                }
 
-        //         let name = Questiondb.findOneAndUpdate(
-        //             { paper_name: req.body.paper_name },
-        //             query,
-        //             {
-        //                 returnNewDocument: true
-        //             }, function (error, result) {
-        //                 // console.log(error)
-        //                 // console.log(result)
-        //             }
-        //         )
-        //         // console.log(name)
-        //     }
-        // }
-        // );
+                let name = Questiondb.findOneAndUpdate(
+                    { paper_name: req.body.paper_name },
+                    query,
+                    {
+                        returnNewDocument: true
+                    }, function (error, result) {
+                        // console.log(error)
+                        // console.log(result)
+                    }
+                )
+                // console.log(name)
+            }
+        }
+        );
     
 
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 class Header2 extends Component {
     constructor(props) {
         super(props)
-
+        console.log(this.props)
         this.onSubmitLogout = this.onSubmitLogout.bind(this);
     }
     onSubmitLogout(e) {
@@ -13,7 +13,9 @@ class Header2 extends Component {
         axios.get('http://localhost:5000/logout')
             .then((res) => {
                 // console.log(this.props);
+                console.log(this.props.loginstatus());
                 this.props.logout();
+                console.log(this.props.loginstatus());
             }).catch((error) => {
                 console.log(error)
             });

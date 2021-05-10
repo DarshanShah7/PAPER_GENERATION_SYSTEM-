@@ -14,23 +14,24 @@ import {
 class App extends Component {
   constructor(){
     super()
-
-    this.isloggedin = false;
+    
+    // this.onChangeUserName = this.onChangeUserName.bind(this);
+    this.state = { isloggedin : false}
   
   };
-
+  
   login = () => {
-    this.isloggedin = true;
+    this.setState({isloggedin : true});
     alert("login done");
   }
 
   logout = () => {
-    this.isloggedin = false;
+    this.setState({isloggedin : false});
     alert("logged out succesfully");
   }
 
   loginstatus = () => {
-    return this.isloggedin;
+    return this.state.isloggedin;
   }
 
   render() {
