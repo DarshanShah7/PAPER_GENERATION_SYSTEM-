@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './question.css'
 import axios from 'axios';
-
 class Question extends Component {
     constructor() {
         super();
@@ -152,11 +151,13 @@ class Question extends Component {
     render() {
         return (
             <div>
+            <div style={{display: 'inline-block',marginTop:10+'px'}}>
+                <h1 align="center" style={{marginBottom:15+'px'}}> Add Question</h1>
                 <form onSubmit={this.FormSubmit} id = "question-form">
                     <div className="question-paramters">
 
                         <div className="question-paramters-1" >
-                            <label htmlFor="difficulty">Difficulty</label>
+                            <label htmlFor="difficulty" style={{marginRight:40+'px'}}>Difficulty</label>
                             <select className="form-select" aria-label="Default select example" onChange={(e) => this.difficulty = e.target.value} name="difficulty-level" id="difficulty" >
                                 {/* {true && <option value="Easy">Easy1</option>} */}
 
@@ -167,7 +168,7 @@ class Question extends Component {
                         </div>
                         <br />
                         <div className="question-paramters-1" >
-                            <label htmlFor="Marks">Marks</label>
+                            <label htmlFor="Marks" style={{marginRight:67+'px'}}>Marks</label>
                             <select className="form-select" aria-label="Default select example" onChange={(e) => this.marks = e.target.value} name="marks" id="Marks" >
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -191,24 +192,24 @@ class Question extends Component {
                     </div>
                     <div className="question1" >
 
-                        <label htmlFor="question">Question</label>
+                        <label htmlFor="question" style={{marginRight:45+'px'}}>Question</label>
                         <textarea name="Question" id="questionid" onChange={(e) => this.question = e.target.value} cols="60" rows="3" ></textarea>
                     </div>
                     {this.state.value === "Single-Correct" && <div className="answers"  >
                         <br />
                         <div id="single-correct" >
 
-                            <label htmlFor="option-a">Option-A</label>
+                            <label htmlFor="option-a" style={{marginRight:45+'px'}}>Option-A</label>
                             <textarea name="Option-A" id="single-correct-option-a" onChange={(e) => this.SingleCorrect.a = e.target.value} cols="60" rows="1" className="SingleCorrectOptions"></textarea>
                             <br />
-                            <label htmlFor="option-b">Option-B</label>
+                            <label htmlFor="option-b" style={{marginRight:45+'px'}}>Option-B</label>
                             <textarea name="Option-B" id="single-correct-option-b" onChange={(e) => this.SingleCorrect.b = e.target.value} cols="60" rows="1" className="SingleCorrectOptions"></textarea>
                             <br />
-                            <label htmlFor="option-c">Option-C</label>
+                            <label htmlFor="option-c" style={{marginRight:45+'px'}}>Option-C</label>
                             <textarea name="Option-C" id="single-correct-option-c" onChange={(e) => this.SingleCorrect.c = e.target.value} cols="60" rows="1" className="SingleCorrectOptions"></textarea>
                             <br />
 
-                            <label htmlFor="option-d">Option-D</label>
+                            <label htmlFor="option-d" style={{marginRight:45+'px'}}>Option-D</label>
                             <textarea name="Option-D" id="single-correct-option-d" onChange={(e) => this.SingleCorrect.d = e.target.value} cols="60" rows="1" className="SingleCorrectOptions"></textarea>
                             <br />
                             <label htmlFor="answer">Answer</label>
@@ -226,21 +227,21 @@ class Question extends Component {
 
 
                     }
-                    {this.state.value === "Multiple-Correct" && <div id="multiple-correct" >
-                        <label htmlFor="multiple-correct-option-a">Option-A</label>
+                    {this.state.value === "Multiple-Correct" && <div id="multiple-correct" style = {{marginTop:20+'px'}} >
+                        <label htmlFor="multiple-correct-option-a" style={{marginRight:34+'px'}}>Option-A</label>
                         <textarea name="multiple-correct-Option-A" onChange={(e) => this.MultipleCorrect.a = e.target.value} id="multiple-correct-option-a" cols="60" rows="1"
                             className="MultipleCorrectOptions"></textarea>
                         <br />
-                        <label htmlFor="multiple-correct-option-b">Option-B</label>
+                        <label htmlFor="multiple-correct-option-b" style={{marginRight:34+'px'}}>Option-B</label>
                         <textarea name="multiple-correct-Option-B" onChange={(e) => this.MultipleCorrect.b = e.target.value} id="multiple-correct-option-b" cols="60" rows="1"
                             className="MultipleCorrectOptions"></textarea>
                         <br />
-                        <label htmlFor="multiple-correct-option-c">Option-C</label>
+                        <label htmlFor="multiple-correct-option-c" style={{marginRight:34+'px'}}>Option-C</label>
                         <textarea name="multiple-correct-Option-C" onChange={(e) => this.MultipleCorrect.c = e.target.value} id="multiple-correct-option-c" cols="60" rows="1"
                             className="MultipleCorrectOptions"></textarea>
                         <br />
 
-                        <label htmlFor="multiple-correct-option-d">Option-D</label>
+                        <label htmlFor="multiple-correct-option-d" style={{marginRight:34+'px'}}>Option-D</label>
                         <textarea name="multiple-correct-Option-D" onChange={(e) => this.MultipleCorrect.d = e.target.value} id="multiple-correct-option-d" cols="60" rows="1"
                             className="MultipleCorrectOptions"></textarea>
                         <br />
@@ -272,14 +273,15 @@ class Question extends Component {
                     }
 
                     {this.state.value === "Numerical" &&
-                        <div id="numericals"  >
+                        <div id="numericals"  style={{marginTop:20+'px'}}>
                             <label htmlFor="numerical-ans">Answer</label>
                             <textarea name="numerical-Answer" onChange={(e) => this.Numerical.ans = e.target.value} id="numerical-ans" cols="20" rows="1" ></textarea>
                         </div>
                     }
 
-                    <button type="submit" className="btn btn-info btn-block btn-round">Submit</button>
+                    <button type="submit" className="btn btn-info btn-block btn-round" style={{display:'table-cell',width:100+'px',fontSize:20+'px',marginTop:10+'px'}}>Submit</button>
                 </form>
+            </div>
             </div>
         )
     }
