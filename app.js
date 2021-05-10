@@ -80,6 +80,7 @@ app.get("/login", isLoggedIn, function(req, res) {
 
 
 
+
 // app.post('/login', (req, res)=>{
 
 //     console.log(`The application gave a post request`);

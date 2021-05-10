@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
-
 
 const questionSchema = new mongoose.Schema({
-
+    paper_name : String,
+    SingleCorrect: [],
+    MultipleCorrect: [],
+    Numerical: []
 });
 
-userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Question', questionSchema);

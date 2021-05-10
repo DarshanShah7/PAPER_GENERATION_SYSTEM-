@@ -26,10 +26,10 @@ class Question extends Component {
             c: '',
             d: '',
             ans: {
-                a: false,
-                b: false,
-                c: false,
-                d: false,
+                a: 'false',
+                b: 'false',
+                c: 'false',
+                d: 'false'
             }
         }
 
@@ -42,26 +42,31 @@ class Question extends Component {
     }
     handleChange(event) {
         this.setState({ value: event.target.value });
-        console.log(this.MultipleCorrect)
+        // console.log(this.MultipleCorrect)
     }
 
     FormSubmit(event) {
         event.preventDefault();
         if (this.state.value === 'Single-Correct') {
             const userObject = {
-                marks: this.marks,
-                difficulty: this.difficulty,
-                questiontype: this.state.value,
-                a: this.SingleCorrect.a,
-                b: this.SingleCorrect.b,
-                c: this.SingleCorrect.c,
-                d: this.SingleCorrect.d,
-                ans: this.SingleCorrect.ans
+                paper_name : "paper1",
+                question : {
+                    question : this.question,
+                    marks: this.marks,
+                    difficulty: this.difficulty,
+                    questiontype: this.state.value,
+                    a: this.SingleCorrect.a,
+                    b: this.SingleCorrect.b,
+                    c: this.SingleCorrect.c,
+                    d: this.SingleCorrect.d,
+                    ans: this.SingleCorrect.ans
+                }
+                
             }
 
             axios.post('http://localhost:5000/savequestion', userObject)
                 .then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                 })
 
             // restore values for next time 
@@ -79,15 +84,18 @@ class Question extends Component {
         }
         if (this.state.value === 'Numerical') {
             const userObject = {
-                marks: this.marks,
-                difficulty: this.difficulty,
-                questiontype: this.state.value,
-                ans: this.Numerical.ans
+                paper_name : "paper1",
+                question : {
+                    question : this.question,
+                    marks: this.marks,
+                    difficulty: this.difficulty,
+                    questiontype: this.state.value,
+                    ans: this.Numerical.ans
+                }
             }
-
             axios.post('http://localhost:5000/savequestion', userObject)
                 .then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                 })
 
             // restore values for next time 
@@ -101,19 +109,23 @@ class Question extends Component {
         }
         if (this.state.value === 'Multiple-Correct') {
             const userObject = {
-                marks: this.marks,
-                difficulty: this.difficulty,
-                questiontype: this.state.value,
-                a: this.MultipleCorrect.a,
-                b: this.MultipleCorrect.b,
-                c: this.MultipleCorrect.c,
-                d: this.MultipleCorrect.d,
-                ans: this.MultipleCorrect.ans
+                paper_name : "paper1",
+                question : {
+                    question : this.question,
+                    marks: this.marks,
+                    difficulty: this.difficulty,
+                    questiontype: this.state.value,
+                    a: this.MultipleCorrect.a,
+                    b: this.MultipleCorrect.b,
+                    c: this.MultipleCorrect.c,
+                    d: this.MultipleCorrect.d,
+                    ans: this.MultipleCorrect.ans
+                }
             }
 
             axios.post('http://localhost:5000/savequestion', userObject)
                 .then((res) => {
-                    console.log(res.data);
+                    // console.log(res.data);
                 })
 
             // restore values for next time 
@@ -126,7 +138,12 @@ class Question extends Component {
                 b: '',
                 c: '',
                 d: '',
-                ans: '1'
+                ans: {
+                    a: 'false',
+                    b: 'false',
+                    c: 'false',
+                    d: 'false'
+                }
             }
         }
     }
