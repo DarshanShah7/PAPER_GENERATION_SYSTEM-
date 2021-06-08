@@ -45,13 +45,15 @@ class Header extends Component {
             .then((res) => {
                 // console.log(res.data.value);
                 console.log(this.props.loginstatus());
-                if(res.data.value === '1'){
+                if(res.data.value === '1'){                    //loginid valid
                     this.props.login();
+                    console.log(this.props.loginstatus());
+
                     window.location.assign('/login');
                 }else{
                     alert("invalid username or password");
                 }
-                console.log(this.props.loginstatus());
+                // console.log(this.props.loginstatus());
                 // console.log("done");
                 // window.location.assign('/login');
                

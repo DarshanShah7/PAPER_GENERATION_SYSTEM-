@@ -17,6 +17,7 @@ class App extends Component {
     
     // this.onChangeUserName = this.onChangeUserName.bind(this);
     this.state = { isloggedin : false}
+    console.log("hi");
   
   };
   
