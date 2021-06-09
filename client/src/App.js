@@ -19,7 +19,6 @@ class App extends Component {
     // this.onChangeUserName = this.onChangeUserName.bind(this);
     this.state = { isloggedin : false}
     console.log("hi");
-  
   };
   
   login = () => {
@@ -43,7 +42,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" >
-              <Header login = {this.login} loginstatus = {this.loginstatus} />
+              <Header login = {this.login} loginstatus = {this.loginstatus}/>
             </Route>
             
             <Route exact path="/login" >

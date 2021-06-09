@@ -38,5 +38,8 @@
   "bugs": {
     "url": "https://github.com/darshanshah-dev/PAPER_GENERATION_SYSTEM-/issues"
   },
-  "homepage": "https://github.com/darshanshah-dev/PAPER_GENERATION_SYSTEM-#readme"
+  "homepage": "https://github.com/darshanshah-dev/PAPER_GENERATION_SYSTEM-#readme",
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
 }

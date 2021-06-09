@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+// import { useHistory } from "react-router-dom";
 
-// import { Redirect } from "react-router-dom";
+
+    
+
+import { Redirect } from "react-router-dom";
 class Header extends Component {
     constructor(props) {
         super(props)
@@ -14,13 +18,14 @@ class Header extends Component {
         this.onChangeroleSignup = this.onChangeroleSignup.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onSubmitSignup = this.onSubmitSignup.bind(this);
-
+        // this.history = useHistory();
         this.state = {
             name: '',
             password: '',
             nameSignup: '',
             passwordSignup: '',
-            roleSignup: ''
+            roleSignup: '',
+            redirect : false
         }
     }
 
@@ -43,13 +48,19 @@ class Header extends Component {
         console.log("Hello ");
         axios.post('http://localhost:5000/login', userObject)
             .then((res) => {
-                // console.log(res.data.value);
                 console.log(this.props.loginstatus());
                 if(res.data.value === '1'){                    //loginid valid
                     this.props.login();
                     console.log(this.props.loginstatus());
 
-                    window.location.assign('/login');
+                    // window.location.assign('/login');
+                    // this.props.history.push("/login");
+                    // return(<Redirection/>)
+                    this.setState({ redirect: true })
+
+                    // <Redirect  to='/login'/>
+                    console.log(this);
+
                 }else{
                     alert("invalid username or password");
                 }
@@ -107,7 +118,10 @@ class Header extends Component {
     state = {}
     render() {
         return (
+
             <div>
+                
+                {this.state.redirect && <Redirect to='/login'/>}
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
 
                     <a className="navbar-brand" href="/">Navbar</a>
@@ -270,7 +284,9 @@ class Header extends Component {
 
 
                 </nav>
+            
             </div>
+        
         );
     }
 }
