@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Put_question.css';
 
-class Put_question extends Component {
+class PutQuestion extends Component {
     constructor(props) {
         super(props)
         console.log(this.props.question)
@@ -82,4 +82,4 @@ class Put_question extends Component {
     }
 }
 
-export default Put_question;
+export default PutQuestion;

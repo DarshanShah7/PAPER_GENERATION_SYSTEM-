@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 // import { useHistory } from "react-router-dom";
-
+import $ from 'jquery';
 
     
 
@@ -40,7 +40,8 @@ class Header extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-
+        $('#modalclose').click()
+        console.log(this.state)
         const userObject = {
             username: this.state.name,
             password: this.state.password
@@ -50,7 +51,7 @@ class Header extends Component {
             .then((res) => {
                 console.log(this.props.loginstatus());
                 if(res.data.value === '1'){                    //loginid valid
-                    this.props.login();
+                    this.props.login(userObject.username);
                     console.log(this.props.loginstatus());
 
                     // window.location.assign('/login');
@@ -59,7 +60,7 @@ class Header extends Component {
                     this.setState({ redirect: true })
 
                     // <Redirect  to='/login'/>
-                    console.log(this);
+                    // console.log(this);
 
                 }else{
                     alert("invalid username or password");
@@ -121,7 +122,7 @@ class Header extends Component {
 
             <div>
                 
-                {this.state.redirect && <Redirect to='/login'/>}
+                {this.state.redirect  && <Redirect to='/login'/>}
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
 
                     <a className="navbar-brand" href="/">Navbar</a>
@@ -190,7 +191,7 @@ class Header extends Component {
                                 <div className="modal-dialog modal-dialog-centered" role="document">
                                     <div className="modal-content">
                                         <div className="modal-header border-bottom-0">
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="modalclose">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -206,7 +207,7 @@ class Header extends Component {
                                                     <div className="form-group">
                                                         <input type="password" name="password" className="form-control" id="password1" value={this.state.password} onChange={this.onChangePassword} placeholder="Your password..." />
                                                     </div>
-                                                    <button type="submit" className="btn btn-info btn-block btn-round">Login</button>
+                                                    <button type="submit" className="btn btn-info btn-block btn-round" id = "loginsubmit">Login</button>
                                                 </form>
 
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import Put_question from './Put_question';
+import PutQuestion from './Put_question';
 
-class Put_question_paper extends Component {
+class PutQuestionPaper extends Component {
     constructor(props){
         super(props)
         console.log(this.props.question)
@@ -15,7 +15,7 @@ class Put_question_paper extends Component {
                 
                     this.props.question.map((question)=>{
                     console.log(question);
-                    return (<Put_question question = {question}/>   
+                    return (<PutQuestion question = {question}/>   
                     )
                 }) 
                 }
@@ -25,4 +25,4 @@ class Put_question_paper extends Component {
     }
 }
 
-export default Put_question_paper;
+export default PutQuestionPaper;
