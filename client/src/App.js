@@ -46,11 +46,11 @@ class App extends Component {
             <Route exact path="/" >
               <Header login = {this.login} loginstatus = {this.loginstatus}/>
             </Route>
-            {this.state.isloggedin ?
-            <Route exact path="/login" >
+            {/* {this.state.isloggedin ? */}
+            <Route path="/login" >
               <Header2  logout = {this.logout} loginstatus = {this.loginstatus} />
             </Route>
-                    :<Redirect  to='/' />}
+                    {/* :<Redirect  to='/' />} */}
           </Switch>
           <Switch>
             {/* <Route exact path="/" >

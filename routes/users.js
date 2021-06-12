@@ -125,6 +125,14 @@ router.post('/login', cors(), (req, res, next) => {
 
 })
 
+router.post('/login/paper',function(req, res) {
+    console.log(req.body)
+    Questiondb.find({ paper_name: req.body.paper_name }, function (err, docs) {
+        res.json(docs[0]);
+        // console.log(docs)
+    });
+})
+
 
 
 
