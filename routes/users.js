@@ -133,9 +133,37 @@ router.post('/login/paper',function(req, res) {
     });
 })
 
+const clientID = '30a5e62205199f98fec1'
+const clientSecret = '75682d11016eaa69d85720e369df0881ebdba12c'
+// Declare the callback route
+router.get('/login/github_callback', (req, res) => {
+
+  // The req.query object has the query params that were sent to this route.
+  const requestToken = req.query.code
+    res.json({ ok: 1 })
+
+    // res.redirect('/question');
+
+  console.log("before axios")
+  axios({
+    method: 'post',
+    url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
+    // Set the content type header, so that we get the response in JSON
+    headers: {
+         accept: 'application/json'
+    }
+  }).then((response) => {
+    access_token = response.data.access_token
+    console.log("github done")
+    res.redirect('/');
+    res.json({ ok: 1 })
+  })
+})
 
 
-
+router.get('/github', (req, res) => {
+    res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientID}`);
+  });
 
 module.exports = router
 

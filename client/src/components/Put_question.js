@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import './Put_question.css';
+import './put_question.css';
 
 class PutQuestion extends Component {
     constructor(props) {
         super(props)
-        console.log(this.props.question)
+        console.log(this.props.number)
     }
     render() {
         return (
-            <div>
+            <div id={"question".concat(this.props.number)}>
+                {console.log(this.props.key)}
+                
                 <div className="question">
                     <div className="subquestion">
                         <p />Question1
@@ -19,24 +21,24 @@ class PutQuestion extends Component {
                         <p />{this.props.question.question}
                         {
                             (this.props.question.questiontype === "Single-Correct" ?
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input className="form-check-input" type="radio" name="options" id="flexRadioDefault1" />
-                                    <label className="form-check-label" for="flexRadioDefault1">
+                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
                                         {this.props.question.a}
                                     </label>
 
                                     <input className="form-check-input" type="radio" name="options" id="flexRadioDefault2" />
-                                    <label className="form-check-label" for="flexRadioDefault2">
+                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
                                         {this.props.question.b}
                                     </label>
 
                                     <input className="form-check-input" type="radio" name="options" id="flexRadioDefault3" />
-                                    <label className="form-check-label" for="flexRadioDefault3">
+                                    <label className="form-check-label" htmlFor="flexRadioDefault3">
                                         {this.props.question.c}
                                     </label>
 
                                     <input className="form-check-input" type="radio" name="options" id="flexRadioDefault4" />
-                                    <label className="form-check-label" for="flexRadioDefault4">
+                                    <label className="form-check-label" htmlFor="flexRadioDefault4">
                                         {this.props.question.d}
                                     </label>
 

@@ -71,7 +71,6 @@ app.use('/question', teacherRoutes);
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 })
-
 app.get("/login", isLoggedIn, function(req, res) {
     // res.sendFile(path.join(__dirname + '/student-login.html'));
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 class Header2 extends Component {
     constructor(props) {
         super(props)
-        console.log(this.props)
+        // console.log(this.props)
         this.onSubmitLogout = this.onSubmitLogout.bind(this);
     }
     onSubmitLogout(e) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 // import Customers from './components/customers';
 import Header from './components/Header';
@@ -9,8 +9,8 @@ import PutQuestionPaper from './components/PutQuestionPaper';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
+  // Redirect
 } from "react-router-dom";
 class App extends Component {
   constructor(){
@@ -18,11 +18,11 @@ class App extends Component {
     
     // this.onChangeUserName = this.onChangeUserName.bind(this);
     this.state = { isloggedin : false, username: ""}
-    console.log("hi");
+    // console.log("hi");
   };
   
   login = (user) => {
-    console.log(user)
+    // console.log(user)
     this.setState({isloggedin : true, username : user});
     alert("login done");
   }
@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   loginstatus = () => {
-    console.log("username = " + this.state.username)
+    // console.log("username = " + this.state.username)
     return this.state.isloggedin;
   }
 
@@ -62,6 +62,7 @@ class App extends Component {
               <Question />
             </Route>
             <Route exact path="/login/paper" >
+              
               <PutQuestionPaper question = {[
                 {
                     "marks": "1",
