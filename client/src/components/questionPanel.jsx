@@ -36,11 +36,14 @@ class QuestionPanel extends Component {
     return (
       <div>
         <div style={{ display: "flex", flexDirection: "column" }}>
+          {console.log("bye")}
           {this.getQuestionGird(this.Questions).map((questionRow,i) =>(
             <div className="questionRow" style={{display:"flex" , flexDirection: "row"}}>
                {questionRow.map((question,j) => (
               <div className="questionCard"  style={{display:"flex"}}>
               <a href={"#question".concat(i+j)}>
+              {/* <a onClick={this.props.set_count(i+j)}> */}
+
                 <Card
                   bg={question.status}
                   key={i+j}
@@ -75,4 +78,4 @@ class QuestionPanel extends Component {
   }
 }
 
-export default QuestionPanel;
+export default React.memo(QuestionPanel);

@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/user');
+const axios = require('axios')
 const mongoose = require('mongoose');
 const passport = require('passport');
 const { isLoggedIn } = require("../middleware");
 const cors = require('cors');
 const Questiondb = require('../models/question');
+require('./github')
 // mongoose.connect('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
 
 router.post('/savequestion', cors(), (req, res) => {
@@ -133,37 +135,44 @@ router.post('/login/paper',function(req, res) {
     });
 })
 
-const clientID = '30a5e62205199f98fec1'
-const clientSecret = '75682d11016eaa69d85720e369df0881ebdba12c'
-// Declare the callback route
-router.get('/login/github_callback', (req, res) => {
+// const clientID = '30a5e62205199f98fec1'
+// const clientSecret = '75682d11016eaa69d85720e369df0881ebdba12c'
+// router.get('/login/github_callback', (req, res) => {
 
-  // The req.query object has the query params that were sent to this route.
-  const requestToken = req.query.code
-    res.json({ ok: 1 })
-
-    // res.redirect('/question');
-
-  console.log("before axios")
-  axios({
-    method: 'post',
-    url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
-    // Set the content type header, so that we get the response in JSON
-    headers: {
-         accept: 'application/json'
-    }
-  }).then((response) => {
-    access_token = response.data.access_token
-    console.log("github done")
-    res.redirect('/');
-    res.json({ ok: 1 })
-  })
-})
+//   const requestToken = req.query.code
 
 
-router.get('/github', (req, res) => {
-    res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientID}`);
-  });
+//   console.log("before axios")
+//   axios({
+//     method: 'post',
+//     url: `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
+//     headers: {
+//          accept: 'application/json'
+//     }
+//   }).then((response) => {
+//     access_token = response.data.access_token
+//     console.log("github done")
+//     console.log(response)
+//     res.redirect('/login');
+//     res.json({ ok: 1 })
+//   })
+// })
+
+
+// router.get('/github', (req, res) => {
+//     res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientID}`);
+//   });
+
+
+router.get('/github',passport.authenticate('github',{ scope: [ 'user:email' ] }));
+router.get('/login/github_callback',passport.authenticate('github', { failureRedirect: '/github/error' }),
+function(req, res) {
+  console.log(req.user.username)
+  res.redirect('/logout');
+  
+});
+
+router.get('/github/error', (req, res) => res.send('Unknown Error'))
 
 module.exports = router
 

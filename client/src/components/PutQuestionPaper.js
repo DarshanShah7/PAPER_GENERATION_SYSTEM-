@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
+import Button from 'react-bootstrap/Button';
 import PutQuestion from './Put_question';
 import QuestionPanel from './questionPanel.jsx';
 
@@ -8,14 +8,16 @@ class PutQuestionPaper extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            load_paper: false
+            load_paper: false,
+            count: 0
         }
-        
+        this.set_count = this.set_count.bind(this);
+
         // console.log(this.props.question)
     }
 
     paper_questions = []
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.index = 0
     }
     componentDidMount() {
@@ -51,17 +53,33 @@ class PutQuestionPaper extends Component {
 
         // alert('opening menu not allowed on this page');
     }
-   
+
+    set_count(c) {
+        
+        this.setState({ count: c, load_paper: true });
+        console.log(this.state.count)
+    }
 
     render() {
         return (
-            <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
-                {this.state.load_paper && 
-                <div >{ console.log(this.paper_questions)}
-                    <QuestionPanel />
-                </div>
-                }
+            <div>
                 <div>
+                    <Button disabled={this.state.count===0} variant="danger" onClick={() => this.set_count(this.state.count - 1)}>
+                        Previous{console.log(this.state.load_paper)}
+                    </Button>
+                    <Button disabled={this.state.count===this.paper_questions.length-1} variant="success" onClick={() => this.set_count(this.state.count + 1)}>
+                        Next{console.log(this.state.load_paper)}
+                    </Button>
+                </div>
+                <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
+                    {this.state.load_paper &&
+                        <div>
+                            <QuestionPanel set_count = {this.set_count}/>
+                        </div>
+                    }
+                    
+                    {this.state.load_paper && <PutQuestion number={this.state.count} question={this.paper_questions[this.state.count]} />}
+                    {/* <div>
                     {this.index = 0}
                     {this.state.load_paper &&
                         
@@ -73,8 +91,9 @@ class PutQuestionPaper extends Component {
                             )
                         })
                     }
+                </div> */}
+                    
                 </div>
-
             </div>
         )
     }

@@ -9,7 +9,7 @@ class PutQuestion extends Component {
     render() {
         return (
             <div id={"question".concat(this.props.number)}>
-                {console.log(this.props.key)}
+                {console.log(this.props.question)}
                 
                 <div className="question">
                     <div className="subquestion">
