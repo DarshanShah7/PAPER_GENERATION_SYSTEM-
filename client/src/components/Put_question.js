@@ -4,16 +4,42 @@ import './put_question.css';
 class PutQuestion extends Component {
     constructor(props) {
         super(props)
-        console.log(this.props.number)
+        this.state = {
+            answer: this.props.answer
+        }
+        this.handleChange = this.handleChange.bind(this);
+        // console.log("ccccccccccccccccccccccc")
     }
+
+    componentDidUpdate(prevProps) {
+        
+        if (prevProps.number !== this.props.number) {
+            console.log('qqqqqqqqqqqqqqq    ')
+            this.setState({ answer: this.props.answer })
+            if(this.props.question.questiontype === "Multiple-Correct" && this.props.answer === undefined){
+                this.setState({answer : {a : "false", b : "false", c : "false", d : "false" }})
+            }
+        }
+        console.log(this.state.answer)
+      }
+
+    handleChange(e) {
+        console.log(e.target.value)
+        this.setState({ answer: e.target.value }, () => {
+            this.props.set_answer(this.state.answer, this.props.number);
+        })
+        // this.props.set_answer(this.state.answer, this.props.number)
+
+    }
+
     render() {
         return (
             <div id={"question".concat(this.props.number)}>
-                {console.log(this.props.question)}
-                
+               
+                {console.log("rendering chi;d")}
                 <div className="question">
                     <div className="subquestion">
-                        <p />Question1
+                        <p />Question{this.props.number + 1}
                         <p />marks = {this.props.question.marks}
                         <p />difficulty = {this.props.question.difficulty}
                     </div>
@@ -21,62 +47,70 @@ class PutQuestion extends Component {
                         <p />{this.props.question.question}
                         {
                             (this.props.question.questiontype === "Single-Correct" ?
-                                <div className="form-check">
-                                    <input className="form-check-input" type="radio" name="options" id="flexRadioDefault1" />
+                                <div className="form-check" >
+                                    <input className="form-check-input"  onChange={this.handleChange} checked = {this.state.answer === "1"} value="1" type="radio" name="options" id="flexRadioDefault1" />
                                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                                         {this.props.question.a}
+                                        
                                     </label>
 
-                                    <input className="form-check-input" type="radio" name="options" id="flexRadioDefault2" />
+                                    <input className="form-check-input" onChange={this.handleChange} checked = {this.state.answer === "2"} value="2" type="radio" name="options" id="flexRadioDefault2" />
                                     <label className="form-check-label" htmlFor="flexRadioDefault2">
                                         {this.props.question.b}
                                     </label>
 
-                                    <input className="form-check-input" type="radio" name="options" id="flexRadioDefault3" />
+                                    <input className="form-check-input"  onChange={this.handleChange} checked = {this.state.answer === "3"} value="3" type="radio" name="options" id="flexRadioDefault3" />
                                     <label className="form-check-label" htmlFor="flexRadioDefault3">
                                         {this.props.question.c}
                                     </label>
 
-                                    <input className="form-check-input" type="radio" name="options" id="flexRadioDefault4" />
+                                    <input className="form-check-input"  onChange={this.handleChange} checked = {this.state.answer === "4"} value="4" type="radio" name="options" id="flexRadioDefault4" />
                                     <label className="form-check-label" htmlFor="flexRadioDefault4">
                                         {this.props.question.d}
+                                        {console.log(this.state.answer+"hihiui")}
                                     </label>
-
+{/*                                     
+                                        <input type="radio" value="1" name="options" /> {this.props.question.a}
+                                        <input type="radio" value="2" name="options" /> {this.props.question.b}
+                                        <input type="radio" value="3" name="options" /> {this.props.question.c}
+                                        <input type="radio" value="4" name="options" /> {this.props.question.d} */}
+                                    
                                 </div>
                                 : (this.props.question.questiontype === "Multiple-Correct" ? <div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="true" id="op1" />
+                                    {/* <div className="form-check">
+                                        <input className="form-check-input" onChange={(e) => {this.state.answer.a = e.target.value;this.props.set_answer(this.state.answer, this.props.number);}} type="checkbox" value="true" id="op1" />
                                         <label className="form-check-label" htmlFor="op1">
                                             {this.props.question.a}
+                                            {console.log(this.state.answer)}
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="true" id="op2" />
+                                        <input className="form-check-input" onChange={(e) => {this.state.answer.b = e.target.value;this.props.set_answer(this.state.answer, this.props.number);}} type="checkbox" value="true" id="op2" />
                                         <label className="form-check-label" htmlFor="op2">
                                             {this.props.question.b}
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="true" id="op3" />
+                                        <input className="form-check-input" onChange={(e) => {this.state.answer.c = e.target.value;this.props.set_answer(this.state.answer, this.props.number);}} type="checkbox" value="true" id="op3" />
                                         <label className="form-check-label" htmlFor="op3">
                                             {this.props.question.c}
                                         </label>
                                     </div>
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="true" id="op4" />
+                                        <input className="form-check-input" onChange={(e) => {this.state.answer.d = e.target.value;this.props.set_answer(this.state.answer, this.props.number);}} type="checkbox" value="true" id="op4" />
                                         <label className="form-check-label" htmlFor="op4">
                                             {this.props.question.d}
                                         </label>
-                                    </div>
+                                    </div> */}
                                 </div>
-                        : <div id="numericals"  style={{marginTop:20+'px'}}>
-                        <label htmlFor="numerical-ans">Answer</label>
-                        <textarea name="numerical-Answer" onChange={(e) => this.Numerical.ans = e.target.value} id="numerical-ans" cols="20" rows="1" ></textarea>
-                    </div>
-                     )
-                        )
+                                    : <div id="numericals" style={{ marginTop: 20 + 'px' }}>
+                                        <label htmlFor="numerical-ans">Answer</label>
+                                        <textarea name="numerical-Answer" onChange={this.handleChange} value={this.state.answer} id="numerical-ans" cols="20" rows="1" ></textarea>
+                                    </div>
+                                )
+                            )
 
-                    }
+                        }
                     </div>
                 </div>
             </div>

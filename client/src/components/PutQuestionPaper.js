@@ -11,14 +11,16 @@ class PutQuestionPaper extends Component {
             load_paper: false,
             count: 0
         }
+        this.set_user_answers = this.set_user_answers.bind(this);
         this.set_count = this.set_count.bind(this);
-
         // console.log(this.props.question)
     }
-
+    // question_panel = []
     paper_questions = []
+    user_answers = []
     componentDidUpdate() {
         this.index = 0
+        console.log(this.user_answers)
     }
     componentDidMount() {
 
@@ -28,6 +30,10 @@ class PutQuestionPaper extends Component {
                 this.paper_questions.push(...res.data.SingleCorrect)
                 this.paper_questions.push(...res.data.MultipleCorrect)
                 this.paper_questions.push(...res.data.Numerical)
+                this.user_answers = new Array(this.paper_questions.length)
+                console.log(this.user_answers)
+                this.question_panel = new Array(this.user_answers.length).fill("danger")
+                console.log(this.question_panel)
                 this.setState({ load_paper: true })
 
             }).catch((error) => {
@@ -55,9 +61,16 @@ class PutQuestionPaper extends Component {
     }
 
     set_count(c) {
-        
+        console.log(this.question_panel)
         this.setState({ count: c, load_paper: true });
         console.log(this.state.count)
+    }
+
+    set_user_answers(answer, number){
+        console.log("dddddddddd")
+        if(answer)
+            this.question_panel[number] = "success"
+        this.user_answers[number] = answer
     }
 
     render() {
@@ -65,10 +78,10 @@ class PutQuestionPaper extends Component {
             <div>
                 <div>
                     <Button disabled={this.state.count===0} variant="danger" onClick={() => this.set_count(this.state.count - 1)}>
-                        Previous{console.log(this.state.load_paper)}
+                        Previous
                     </Button>
                     <Button disabled={this.state.count===this.paper_questions.length-1} variant="success" onClick={() => this.set_count(this.state.count + 1)}>
-                        Next{console.log(this.state.load_paper)}
+                        Next
                     </Button>
                 </div>
                 <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
@@ -77,8 +90,8 @@ class PutQuestionPaper extends Component {
                             <QuestionPanel set_count = {this.set_count}/>
                         </div>
                     }
-                    
-                    {this.state.load_paper && <PutQuestion number={this.state.count} question={this.paper_questions[this.state.count]} />}
+                    {console.log("rerender")}
+                    {this.state.load_paper && <PutQuestion number={this.state.count} answer={this.user_answers[this.state.count]} set_answer={this.set_user_answers} question={this.paper_questions[this.state.count]} />}
                     {/* <div>
                     {this.index = 0}
                     {this.state.load_paper &&

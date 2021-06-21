@@ -8,6 +8,7 @@ const { isLoggedIn } = require("../middleware");
 const cors = require('cors');
 const Questiondb = require('../models/question');
 require('./github')
+require('./google')
 // mongoose.connect('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
 
 router.post('/savequestion', cors(), (req, res) => {
@@ -173,6 +174,18 @@ function(req, res) {
 });
 
 router.get('/github/error', (req, res) => res.send('Unknown Error'))
+
+// google oauth
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile']
+}));
+
+// callback route for google to redirect to
+// hand control to passport to use code to grab profile info
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+    // res.send(req.user);
+    res.redirect('/logout');
+});
 
 module.exports = router
 

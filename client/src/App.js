@@ -6,6 +6,8 @@ import Header from './components/Header';
 import Header2 from './components/Header2';
 import Question from './components/question';
 import PutQuestionPaper from './components/PutQuestionPaper';
+import TeacherLogin from './components/teacherLogin';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -57,10 +59,16 @@ class App extends Component {
               <Header login = {this.login} loginstatus = {this.loginstatus} />
             </Route> */}
             
-            <Route exact path="/login" >
+            <Route exact path="/login/create" >
               {/* {this.state.isloggedin && <Question />} */}
               <Question />
             </Route>
+
+            <Route exact path="/login" >
+              {/* {this.state.isloggedin && <Question />} */}
+              <TeacherLogin />
+            </Route>
+
             <Route exact path="/login/paper" >
               
               <PutQuestionPaper question = {[
