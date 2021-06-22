@@ -13,6 +13,7 @@ class PutQuestionPaper extends Component {
         }
         this.set_user_answers = this.set_user_answers.bind(this);
         this.set_count = this.set_count.bind(this);
+        this.SubmitPaper = this.SubmitPaper.bind(this);
         // console.log(this.props.question)
     }
     // question_panel = []
@@ -20,7 +21,7 @@ class PutQuestionPaper extends Component {
     user_answers = []
     componentDidUpdate() {
         this.index = 0
-        console.log(this.user_answers)
+        // console.log(this.user_answers)
     }
     componentDidMount() {
 
@@ -31,9 +32,9 @@ class PutQuestionPaper extends Component {
                 this.paper_questions.push(...res.data.MultipleCorrect)
                 this.paper_questions.push(...res.data.Numerical)
                 this.user_answers = new Array(this.paper_questions.length)
-                console.log(this.user_answers)
+                // console.log(this.user_answers)
                 this.question_panel = new Array(this.user_answers.length).fill("danger")
-                console.log(this.question_panel)
+                // console.log(this.question_panel)
                 this.setState({ load_paper: true })
 
             }).catch((error) => {
@@ -61,16 +62,36 @@ class PutQuestionPaper extends Component {
     }
 
     set_count(c) {
-        console.log(this.question_panel)
+        // console.log(this.question_panel)
         this.setState({ count: c, load_paper: true });
-        console.log(this.state.count)
+        // console.log(this.state.count)
     }
 
     set_user_answers(answer, number){
-        console.log("dddddddddd")
+        // console.log("dddddddddd")
         if(answer)
             this.question_panel[number] = "success"
         this.user_answers[number] = answer
+    }
+
+    SubmitPaper(){
+        let totalmarks = 0
+        for(let i=0; i<this.user_answers.length; i++){
+            if(this.user_answers[i] === undefined)
+                continue;
+            if(this.paper_questions[i].questiontype === "Multiple-Correct"){
+                
+                if(this.user_answers[i].a.toString() == this.paper_questions[i].ans.a && this.user_answers[i].b.toString()== this.paper_questions[i].ans.b && this.user_answers[i].c.toString() == this.paper_questions[i].ans.c && this.user_answers[i].d.toString() == this.paper_questions[i].ans.d)
+                    totalmarks += parseInt(this.paper_questions[i].marks)
+            }
+            else{
+            if(this.user_answers[i] == this.paper_questions[i].ans)
+                totalmarks += parseInt(this.paper_questions[i].marks)
+            }
+        }
+        
+        console.log(totalmarks)
+
     }
 
     render() {
@@ -83,6 +104,9 @@ class PutQuestionPaper extends Component {
                     <Button disabled={this.state.count===this.paper_questions.length-1} variant="success" onClick={() => this.set_count(this.state.count + 1)}>
                         Next
                     </Button>
+                    <Button variant="danger" onClick={this.SubmitPaper}>
+                        Submit
+                    </Button>
                 </div>
                 <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
                     {this.state.load_paper &&
@@ -90,7 +114,7 @@ class PutQuestionPaper extends Component {
                             <QuestionPanel set_count = {this.set_count}/>
                         </div>
                     }
-                    {console.log("rerender")}
+                    {/* {console.log("rerender")} */}
                     {this.state.load_paper && <PutQuestion number={this.state.count} answer={this.user_answers[this.state.count]} set_answer={this.set_user_answers} question={this.paper_questions[this.state.count]} />}
                     {/* <div>
                     {this.index = 0}

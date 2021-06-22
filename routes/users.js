@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../models/user');
+const {User,Questiondb} = require('../models/user');
 const axios = require('axios')
 const mongoose = require('mongoose');
 const passport = require('passport');
 const { isLoggedIn } = require("../middleware");
 const cors = require('cors');
-const Questiondb = require('../models/question');
+// const Questiondb = require('../models/question');
 require('./github')
 require('./google')
 // mongoose.connect('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -131,6 +131,7 @@ router.post('/login', cors(), (req, res, next) => {
 router.post('/login/paper',function(req, res) {
     console.log(req.body)
     Questiondb.find({ paper_name: req.body.paper_name }, function (err, docs) {
+       
         res.json(docs[0]);
         // console.log(docs)
     });
@@ -183,8 +184,9 @@ router.get('/google', passport.authenticate('google', {
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    // res.send(req.user);
-    res.redirect('/logout');
+    res.send(req.user);
+
+    // res.redirect('/logout');
 });
 
 module.exports = router

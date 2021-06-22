@@ -12,7 +12,7 @@ const cors = require('cors');
 const passportLocalMongoose = require('passport-local-mongoose');
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-const User = require('./models/user');
+const {User} = require('./models/user');
 
 
 const path = require("path");

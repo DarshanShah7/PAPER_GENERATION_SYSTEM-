@@ -116,6 +116,23 @@ class Header extends Component {
         });
     }
 
+    googleAuth() {
+
+        axios.get('http://localhost:5000/google')
+
+            .then((res) => {
+                console.log(this.props.loginstatus());
+                console.log("Google Auth done !");
+                console.log(res)
+
+            }).catch((error) => {
+
+                console.log(error)
+
+            });
+
+    }
+
     state = {}
     render() {
         return (
@@ -132,6 +149,8 @@ class Header extends Component {
                         <span className="navbar-toggler-icon"></span>
 
                     </button>
+                    <button onClick={this.googleAuth} >Sign Up google</button>
+
 
 
 
