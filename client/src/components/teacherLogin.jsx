@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import QuestionPanel from "./components/questionPanel";
 import Card from "react-bootstrap/Card";
 import TeacherMenu from "./teacherMenu";
+import axios from "axios";
 import CreateTestImg from "../createtest.jpg";
 // import Navbar from "react-bootstrap/Navbar";
 // import Nav from "react-bootstrap/Nav";
@@ -10,21 +11,49 @@ import CreateTestImg from "../createtest.jpg";
 // import { Button } from "react-bootstrap";
 // import { FormControl } from "react-bootstrap";
 class TeacherLogin extends Component {
-  state = {
-    PapersList: [
-      { paper: "Data Structures and Algorithms", paperId: 1 },
-      { paper: "Sensors and Automation", paperId: 2 },
-      { paper: "Theory of Computation", paperId: 3 },
-      {
-        paper: "Vector Calculus and Partial Differential Equations",
-        paperId: 4,
-      },
-      { paper: "Data Communication", paperId: 5 },
-      { paper: "MicroProcessors Techniques", paperId: 6 },
-    ],
-  };
-  handleDelete = (paperid) => {
+  constructor() {
+    super();
+    this.state = {
+      PapersList: "",
+      loaded: false
+    };
+    axios.get("http://localhost:5000/paperlist").then(async(res) => {
+      // console.log(res.data);
+      let array = []
+      for(let i=0; i<res.data.length;i++){
+        array.push({paper:res.data[i].paper_name, paperId : i+1})
+       
+      }
+      
+      this.setState({PapersList:array},()=>
+        {
+          console.log(this.state.PapersList)
+          this.setState(...this.state, {loaded:true})
+          
+        }
+        
+      
+      )
+    });
+  }
+
+  // state = {
+  //   PapersList: [
+  //     { paper: "Data Structures and Algorithms", paperId: 1 },
+  //     { paper: "Sensors and Automation", paperId: 2 },
+  //     { paper: "Theory of Computation", paperId: 3 },
+  //     {
+  //       paper: "Vector Calculus and Partial Differential Equations",
+  //       paperId: 4,
+  //     },
+  //     { paper: "Data Communication", paperId: 5 },
+  //     { paper: "MicroProcessors Techniques", paperId: 6 },
+  //   ],
+  // };
+  handleDelete = (paperid,papername) => {
     if (window.confirm("Are you sure you want to delete this Test ? ")) {
+		console.log(paperid,papername)
+		axios.delete('http://localhost:5000/paperdelete', { data: { name: papername } });
       const PapersList = this.state.PapersList.filter(
         (c) => c.paperId !== paperid
       );
@@ -34,7 +63,8 @@ class TeacherLogin extends Component {
   render() {
     return (
       <div>
-        <div
+        { this.state.loaded && 
+          <div
           className="TeacherMenu"
           style={{ display: "flex", placeContent: "center" }}
         >
@@ -58,6 +88,7 @@ class TeacherLogin extends Component {
             </Card>
           </div>
         </div>
+  }
       </div>
     );
   }

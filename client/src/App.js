@@ -6,8 +6,8 @@ import Header from './components/Header';
 import Header2 from './components/Header2';
 import Question from './components/question';
 import PutQuestionPaper from './components/PutQuestionPaper';
+import Editqp from './components/Editqp';
 import TeacherLogin from './components/teacherLogin';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -59,10 +59,10 @@ class App extends Component {
               <Header login = {this.login} loginstatus = {this.loginstatus} />
             </Route> */}
             
-            <Route exact path="/login/create" >
+            {/* <Route exact path="/login/create" > */}
               {/* {this.state.isloggedin && <Question />} */}
-              <Question />
-            </Route>
+              {/* <Question paper_name={"paper1"}/> */}
+            {/* </Route> */}
 
             <Route exact path="/login" >
               {/* {this.state.isloggedin && <Question />} */}
@@ -71,78 +71,13 @@ class App extends Component {
 
             <Route exact path="/login/paper" >
               
-              <PutQuestionPaper question = {[
-                {
-                    "marks": "1",
-                    "difficulty": "Easy",
-                    "questiontype": "Multiple-Correct",
-                    "a": "a2",
-                    "b": "b2",
-                    "c": "c2",
-                    "d": "d2",
-                    "ans": {
-                        "a": "true",
-                        "b": "false",
-                        "c": "true",
-                        "d": "false"
-        }
-      },{
-        "question": "q3",
-        "marks": "1",
-        "difficulty": "Easy",
-        "questiontype": "Numerical",
-        "ans": "a3"
-    },{
-        "question": "q1 The characteristics of strain gauge is defined by",
-        "marks": "1",
-        "difficulty": "Easy",
-        "questiontype": "Single-Correct",
-        "a": "Poisson’s ratio",
-        "b": "Young’s modulus",
-        "c": "Gauge factor",
-        "d": "Change in applied temperature",
-        "ans": "3"
-    },{
-      "question": "q2 The characteristics of strain gauge is defined by",
-      "marks": "1",
-      "difficulty": "Easy",
-      "questiontype": "Single-Correct",
-      "a": "Poisson’s ratio",
-      "b": "Young’s modulus",
-      "c": "Gauge factor",
-      "d": "Change in applied temperature",
-      "ans": "3"
-  },{
-    "question": "q3 The characteristics of strain gauge is defined by",
-    "marks": "1",
-    "difficulty": "Easy",
-    "questiontype": "Single-Correct",
-    "a": "Poisson’s ratio",
-    "b": "Young’s modulus",
-    "c": "Gauge factor",
-    "d": "Change in applied temperature",
-    "ans": "3"
-},{
-  "question": "q4 The characteristics of strain gauge is defined by",
-  "marks": "1",
-  "difficulty": "Easy",
-  "questiontype": "Single-Correct",
-  "a": "Poisson’s ratio",
-  "b": "Young’s modulus",
-  "c": "Gauge factor",
-  "d": "Change in applied temperature",
-  "ans": "3"
-},{
-  "question": "q5 The characteristics of strain gauge is defined by",
-  "marks": "1",
-  "difficulty": "Easy",
-  "questiontype": "Single-Correct",
-  "a": "Poisson’s ratio",
-  "b": "Young’s modulus",
-  "c": "Gauge factor",
-  "d": "Change in applied temperature",
-  "ans": "3"
-}]}/>
+              <PutQuestionPaper />
+            </Route>
+
+            <Route exact path="/login/add_questions/:id" component={Question}>
+            </Route>
+
+            <Route exact path="/login/edit/:id" component={Editqp}>
             </Route>
           </Switch>
         </Router>

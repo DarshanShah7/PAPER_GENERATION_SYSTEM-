@@ -82,11 +82,11 @@ class PutQuestionPaper extends Component {
             if(this.paper_questions[i].questiontype === "Multiple-Correct"){
                 
                 if(this.user_answers[i].a.toString() == this.paper_questions[i].ans.a && this.user_answers[i].b.toString()== this.paper_questions[i].ans.b && this.user_answers[i].c.toString() == this.paper_questions[i].ans.c && this.user_answers[i].d.toString() == this.paper_questions[i].ans.d)
-                    totalmarks += parseInt(this.paper_questions[i].marks)
+                    totalmarks += parseInt(this.paper_questions[i].marks,10)
             }
             else{
             if(this.user_answers[i] == this.paper_questions[i].ans)
-                totalmarks += parseInt(this.paper_questions[i].marks)
+                totalmarks += parseInt(this.paper_questions[i].marks,10)
             }
         }
         

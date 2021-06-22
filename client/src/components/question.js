@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import './question.css'
 import axios from 'axios';
 class Question extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             value: 'Single-Correct'
         };
+        this.paper = this.props.match.params.id
         this.marks = '1';
         this.difficulty = 'Easy';
         this.question = '';
-
+        console.log("from question.js")
         this.SingleCorrect = {
             a: '',
             b: '',
@@ -48,7 +49,7 @@ class Question extends Component {
         event.preventDefault();
         if (this.state.value === 'Single-Correct') {
             const userObject = {
-                paper_name : "paper1",
+                paper_name : this.paper,
                 question : {
                     question : this.question,
                     marks: this.marks,
@@ -83,7 +84,7 @@ class Question extends Component {
         }
         if (this.state.value === 'Numerical') {
             const userObject = {
-                paper_name : "paper1",
+                paper_name : this.paper,
                 question : {
                     question : this.question,
                     marks: this.marks,
@@ -108,7 +109,7 @@ class Question extends Component {
         }
         if (this.state.value === 'Multiple-Correct') {
             const userObject = {
-                paper_name : "paper1",
+                paper_name : this.paper,
                 question : {
                     question : this.question,
                     marks: this.marks,
