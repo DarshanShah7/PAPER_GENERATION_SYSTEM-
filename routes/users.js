@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {User,Questiondb} = require('../models/user');
+const { User, Questiondb } = require('../models/user');
 const axios = require('axios')
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -10,6 +10,46 @@ const cors = require('cors');
 require('./github')
 require('./google')
 // mongoose.connect('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
+var ObjectId = require('mongodb').ObjectID;
+const { readyException } = require("jquery");
+
+
+router.post('/create_paper', cors(), async(req, res) => {
+
+    console.log(req.body);
+    try{
+        const newpaper = await new Questiondb(req.body);
+        await newpaper.save()
+        res.send({success:true})
+    }
+    catch(err){
+        res.send({success:false})
+    }
+    // .then(savedDoc => {
+    // savedDoc === doc;
+    // }); // true
+        // Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
+        //     console.log("debug1")
+        //     if (err) {
+        //         console.log(err);
+        //         // console.log("debug2")
+        //     }
+        //     else {
+        //         //  console.log(docs)
+        //         if (docs.length === 0) {
+        //             // console.log(docs)
+        //                     const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
+        //                     await newpaper.save().then(savedDoc => {
+        //   savedDoc === doc; // true
+            // });;
+    //         }
+
+    //     }
+    // }
+    // );
+
+})
+
 
 router.post('/savequestion', cors(), (req, res) => {
     const customers = [
@@ -20,45 +60,46 @@ router.post('/savequestion', cors(), (req, res) => {
 
     console.log(req.body);
 
-        Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
-            console.log("debug1")
-            if (err) {
-                console.log(err);
-                // console.log("debug2")
-            }
-            else {
-                //  console.log(docs)
-                if (docs.length === 0) {
-                    // console.log(docs)
-                    const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
-                    await newpaper.save();
-                }
-                let query;
-                if (req.body.question.questiontype === 'Single-Correct') {
-                    query = {$push: { SingleCorrect: req.body.question }};
-                }
-                if (req.body.question.questiontype === 'Multiple-Correct') {
-                    query = {$push: { MultipleCorrect: req.body.question }};
-                }
-                if (req.body.question.questiontype === 'Numerical') {
-                    query = {$push: { Numerical: req.body.question }};
-                }
-
-                let name = Questiondb.findOneAndUpdate(
-                    { paper_name: req.body.paper_name },
-                    query,
-                    {
-                        returnNewDocument: true
-                    }, function (error, result) {
-                        // console.log(error)
-                        // console.log(result)
-                    }
-                )
-                // console.log(name)
-            }
+    Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
+        console.log("debug1")
+        if (err) {
+            console.log(err);
+            // console.log("debug2")
         }
-        );
-    
+        else {
+            //  console.log(docs)
+            if (docs.length === 0) {
+                // console.log(docs)
+                const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
+                await newpaper.save();
+            }
+            let query;
+            req.body.question._id = ObjectId()
+            if (req.body.question.questiontype === 'Single-Correct') {
+                query = { $push: { SingleCorrect: req.body.question } };
+            }
+            if (req.body.question.questiontype === 'Multiple-Correct') {
+                query = { $push: { MultipleCorrect: req.body.question } };
+            }
+            if (req.body.question.questiontype === 'Numerical') {
+                query = { $push: { Numerical: req.body.question } };
+            }
+
+            let name = Questiondb.findOneAndUpdate(
+                { paper_name: req.body.paper_name },
+                query,
+                {
+                    returnNewDocument: true
+                }, function (error, result) {
+                    // console.log(error)
+                    // console.log(result)
+                }
+            )
+            // console.log(name)
+        }
+    }
+    );
+
 
 
     res.json(customers);
@@ -118,7 +159,8 @@ router.post('/login', cors(), (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
         if (!user) { res.json({ value: "0" }); }
         else {
-            res.json({ value: "1" });
+            // console.log(user)
+            res.json({ value: "1", userdata: user.username, role: user.role });
         }
     })(req, res, next);
     // req.flash('success', 'welcome back!');
@@ -128,10 +170,19 @@ router.post('/login', cors(), (req, res, next) => {
 
 })
 
-router.post('/login/paper',function(req, res) {
+router.post('/login/paper', function (req, res) {
+    console.log(req.body)
+    Questiondb.find({ paper_id: req.body.paper_id }, function (err, docs) {
+
+        res.json(docs[0]);
+        // console.log(docs)
+    });
+})
+
+router.post('/login/teacher-paper', function (req, res) {
     console.log(req.body)
     Questiondb.find({ paper_name: req.body.paper_name }, function (err, docs) {
-       
+
         res.json(docs[0]);
         // console.log(docs)
     });
@@ -166,27 +217,27 @@ router.post('/login/paper',function(req, res) {
 //   });
 
 
-router.get('/github',passport.authenticate('github',{ scope: [ 'user:email' ] }));
-router.get('/login/github_callback',passport.authenticate('github', { failureRedirect: '/github/error' }),
-function(req, res) {
-  console.log(req.user.username)
-  res.redirect('/logout');
-  
-});
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/login/github_callback', passport.authenticate('github', { failureRedirect: '/github/error' }),
+    function (req, res) {
+        console.log(req.user.username)
+        res.redirect('/logout');
+
+    });
 
 router.get('/github/error', (req, res) => res.send('Unknown Error'))
 
-// google oauth
-router.get('/google', passport.authenticate('google', {
+//authenticating with google
+router.get('/auth/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
-// callback route for google to redirect to
-// hand control to passport to use code to grab profile info
+
+//redirect url
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     res.send(req.user);
-
-    // res.redirect('/logout');
+    console.log("gggggggggggggggg")
+    // res.redirect('/login');
 });
 
 module.exports = router

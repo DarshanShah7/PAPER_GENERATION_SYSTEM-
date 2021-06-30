@@ -13,6 +13,7 @@ class Editqp extends Component {
             count: 0,
             paper_questions: []
         }
+        this.user = this.props.match.params.user
 
         this.paper = this.props.match.params.id
         this.set_count = this.set_count.bind(this);
@@ -26,7 +27,7 @@ class Editqp extends Component {
     }
     componentDidMount() {
 
-        axios.post('http://localhost:5000/login/paper', { paper_name: this.paper })
+        axios.post('http://localhost:5000/login/teacher-paper', { paper_name: this.paper })
             .then(async (res) => {
                 // console.log(res.data)
                 this.paper_questions_temp.push(...res.data.SingleCorrect)
@@ -52,7 +53,7 @@ class Editqp extends Component {
     }
 
     delete_question(count) {
-        axios.delete('http://localhost:5000/questiondelete', { data: { name: this.paper, question: this.state.paper_questions[count].question, questiontype: this.state.paper_questions[count].questiontype } });
+        axios.delete('http://localhost:5000/questiondelete', { data: { name: this.paper, id: this.state.paper_questions[count]._id, questiontype: this.state.paper_questions[count].questiontype } });
         this.paper_questions_temp.splice(count, 1)
         this.setState(...this.state, { paper_questions: this.paper_questions_temp })
 
@@ -63,7 +64,7 @@ class Editqp extends Component {
             <div>
                 {/* {console.log(this.props.match.params.id)} */}
                 <div>
-                    <Link to={"/login/add_questions/"+ this.paper}>
+                    <Link to={"/login/"+this.user+ "/"+ this.paper+"/add_questions"}>
                         <Button className="btn btn-success btn-sm m-2">add question</Button>
                     </Link>
                 </div>

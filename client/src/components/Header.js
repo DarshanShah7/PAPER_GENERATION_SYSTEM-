@@ -25,10 +25,12 @@ class Header extends Component {
             nameSignup: '',
             passwordSignup: '',
             roleSignup: '',
-            redirect : false
+            redirect : false,
+            username:"",
+            role:""
         }
     }
-
+    
     onChangeUserName(e) {
         this.setState({ name: e.target.value })
     }
@@ -50,6 +52,7 @@ class Header extends Component {
         axios.post('http://localhost:5000/login', userObject)
             .then((res) => {
                 console.log(this.props.loginstatus());
+                console.log(res)
                 if(res.data.value === '1'){                    //loginid valid
                     this.props.login(userObject.username);
                     console.log(this.props.loginstatus());
@@ -57,7 +60,7 @@ class Header extends Component {
                     // window.location.assign('/login');
                     // this.props.history.push("/login");
                     // return(<Redirection/>)
-                    this.setState({ redirect: true })
+                    this.setState({ redirect: true, username:res.data.userdata, role:res.data.role })
 
                     // <Redirect  to='/login'/>
                     // console.log(this);
@@ -139,7 +142,12 @@ class Header extends Component {
 
             <div>
                 
-                {this.state.redirect  && <Redirect to='/login'/>}
+                {this.state.redirect  &&
+                    (this.state.role==='teacher'?
+                    <Redirect to={'/login/' + this.state.username}/> : <Redirect to={'/student/' + this.state.username}/>  
+                    )
+                }
+                
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
 
                     <a className="navbar-brand" href="/">Navbar</a>
@@ -149,8 +157,8 @@ class Header extends Component {
                         <span className="navbar-toggler-icon"></span>
 
                     </button>
-                    <button onClick={this.googleAuth} >Sign Up google</button>
-
+                    {/* <button onClick={this.googleAuth} >Sign Up google</button> */}
+                    <a href="/auth/google">Google Signup</a>
 
 
 

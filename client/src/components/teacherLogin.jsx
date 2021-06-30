@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 // import QuestionPanel from "./components/questionPanel";
 import Card from "react-bootstrap/Card";
 import TeacherMenu from "./teacherMenu";
@@ -11,13 +12,15 @@ import CreateTestImg from "../createtest.jpg";
 // import { Button } from "react-bootstrap";
 // import { FormControl } from "react-bootstrap";
 class TeacherLogin extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       PapersList: "",
       loaded: false
+      
     };
-    axios.get("http://localhost:5000/paperlist").then(async(res) => {
+    this.user = this.props.match.params.user
+    axios.post("http://localhost:5000/paperlist", { user: this.user }).then(async(res) => {
       // console.log(res.data);
       let array = []
       for(let i=0; i<res.data.length;i++){
@@ -73,6 +76,7 @@ class TeacherLogin extends Component {
             <TeacherMenu
               PapersList={this.state.PapersList}
               onDelete={this.handleDelete}
+              user ={this.user}
             />
           </div>
           <div style={{ margin: "30px", marginTop: "80px" }}>
@@ -83,7 +87,10 @@ class TeacherLogin extends Component {
                   <h2>Create a New Test</h2>
                 </Card.Title>
                 <Card.Text>Complete the due paper setting now.</Card.Text>
-                <button className="btn btn-primary">Create a New Test</button>
+                <Link to ={ "/login/" +this.user+"/new_test" }>
+                  <button className="btn btn-primary">Create a New Test</button>
+                </Link>
+                
               </Card.Body>
             </Card>
           </div>

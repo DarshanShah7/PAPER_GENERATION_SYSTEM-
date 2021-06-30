@@ -33,7 +33,7 @@ class TeacherMenu extends Component {
                   <b>{Paper.paper}</b>
                 </td>
                 <td>
-                  <Link to ={ "/login/edit/" + Paper.paper }>
+                  <Link to ={ "/login/"+this.props.user+"/" + Paper.paper +"/edit/" }>
                   <button className="btn btn-success btn-sm m-2">Edit</button>
                   </Link>
                   {/* <button onClick = {()=> this.setState({redirect_flag:true})} className="btn btn-success btn-sm m-2">Edit</button> */}

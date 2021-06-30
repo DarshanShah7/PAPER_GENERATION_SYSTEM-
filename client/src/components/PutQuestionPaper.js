@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import PutQuestion from './Put_question';
+import { Redirect } from "react-router-dom";
 import QuestionPanel from './questionPanel.jsx';
 
 class PutQuestionPaper extends Component {
@@ -9,7 +10,8 @@ class PutQuestionPaper extends Component {
         super(props)
         this.state = {
             load_paper: false,
-            count: 0
+            count: 0,
+            redirect: false
         }
         this.set_user_answers = this.set_user_answers.bind(this);
         this.set_count = this.set_count.bind(this);
@@ -25,7 +27,7 @@ class PutQuestionPaper extends Component {
     }
     componentDidMount() {
 
-        axios.post('http://localhost:5000/login/paper', { paper_name: "paper1" })
+        axios.post('http://localhost:5000/login/paper', { paper_id: this.props.match.params.paper_id })
             .then(async (res) => {
                 // console.log(res.data)
                 this.paper_questions.push(...res.data.SingleCorrect)
@@ -67,41 +69,56 @@ class PutQuestionPaper extends Component {
         // console.log(this.state.count)
     }
 
-    set_user_answers(answer, number){
+    set_user_answers(answer, number) {
         // console.log("dddddddddd")
-        if(answer)
+        if (answer)
             this.question_panel[number] = "success"
         this.user_answers[number] = answer
     }
 
-    SubmitPaper(){
+    SubmitPaper() {
         let totalmarks = 0
-        for(let i=0; i<this.user_answers.length; i++){
-            if(this.user_answers[i] === undefined)
+        for (let i = 0; i < this.user_answers.length; i++) {
+            if (this.user_answers[i] === undefined)
                 continue;
-            if(this.paper_questions[i].questiontype === "Multiple-Correct"){
-                
-                if(this.user_answers[i].a.toString() == this.paper_questions[i].ans.a && this.user_answers[i].b.toString()== this.paper_questions[i].ans.b && this.user_answers[i].c.toString() == this.paper_questions[i].ans.c && this.user_answers[i].d.toString() == this.paper_questions[i].ans.d)
-                    totalmarks += parseInt(this.paper_questions[i].marks,10)
+            if (this.paper_questions[i].questiontype === "Multiple-Correct") {
+
+                if (this.user_answers[i].a.toString() == this.paper_questions[i].ans.a && this.user_answers[i].b.toString() == this.paper_questions[i].ans.b && this.user_answers[i].c.toString() == this.paper_questions[i].ans.c && this.user_answers[i].d.toString() == this.paper_questions[i].ans.d)
+                    totalmarks += parseInt(this.paper_questions[i].marks, 10)
             }
-            else{
-            if(this.user_answers[i] == this.paper_questions[i].ans)
-                totalmarks += parseInt(this.paper_questions[i].marks,10)
+            else {
+                if (this.user_answers[i] == this.paper_questions[i].ans)
+                    totalmarks += parseInt(this.paper_questions[i].marks, 10)
             }
         }
+        axios.post('http://localhost:5000/store_marks', { username: this.props.match.params.user, paper_id: this.props.match.params.paper_id, marks: totalmarks })
+            .then(async (res) => {
+                console.log(res.data)
+                console.log("inside axios")
+                // this.setState({ load_paper: true })
+
+            }).catch((error) => {
+                console.log(error)
+            });
+
         
+        this.setState({ redirect: true })
         console.log(totalmarks)
+
 
     }
 
     render() {
         return (
             <div>
+                {this.state.redirect &&
+                    <Redirect to={'/student/' + this.props.match.params.user} />
+                }
                 <div>
-                    <Button disabled={this.state.count===0} variant="danger" onClick={() => this.set_count(this.state.count - 1)}>
+                    <Button disabled={this.state.count === 0} variant="danger" onClick={() => this.set_count(this.state.count - 1)}>
                         Previous
                     </Button>
-                    <Button disabled={this.state.count===this.paper_questions.length-1} variant="success" onClick={() => this.set_count(this.state.count + 1)}>
+                    <Button disabled={this.state.count === this.paper_questions.length - 1} variant="success" onClick={() => this.set_count(this.state.count + 1)}>
                         Next
                     </Button>
                     <Button variant="danger" onClick={this.SubmitPaper}>
@@ -111,7 +128,7 @@ class PutQuestionPaper extends Component {
                 <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
                     {this.state.load_paper &&
                         <div>
-                            <QuestionPanel set_count = {this.set_count}/>
+                            <QuestionPanel set_count={this.set_count} />
                         </div>
                     }
                     {/* {console.log("rerender")} */}
@@ -129,7 +146,7 @@ class PutQuestionPaper extends Component {
                         })
                     }
                 </div> */}
-                    
+
                 </div>
             </div>
         )

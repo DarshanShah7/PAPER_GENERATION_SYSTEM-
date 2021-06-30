@@ -146,7 +146,7 @@ class Question extends Component {
                 }
             }
         }
-        document.getElementById("question-form").reset();
+        // document.getElementById("question-form").reset();
     }
 
     render() {
