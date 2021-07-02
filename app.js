@@ -5,7 +5,6 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const userRoutes = require('./routes/users'); //for router
-const teacherRoutes = require('./routes/teacher');
 const qpaperRoutes = require('./routes/qpaper');
 const cors = require('cors');
 
@@ -69,7 +68,6 @@ app.use((req, res, next) => {
     // router 
 app.use('/', userRoutes);
 app.use('/', qpaperRoutes);
-app.use('/question', teacherRoutes);
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 })

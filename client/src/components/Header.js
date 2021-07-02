@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import { useHistory } from "react-router-dom";
 import $ from 'jquery';
-
+import { axiosInstance } from './axios';
+// axios.defaults.baseURL = 'https://localhost:5000';
     
 
 import { Redirect } from "react-router-dom";
@@ -121,7 +122,7 @@ class Header extends Component {
 
     googleAuth() {
 
-        axios.get('http://localhost:5000/google')
+        axiosInstance.get('http://localhost:5000/auth/google')
 
             .then((res) => {
                 console.log(this.props.loginstatus());
@@ -158,8 +159,9 @@ class Header extends Component {
 
                     </button>
                     {/* <button onClick={this.googleAuth} >Sign Up google</button> */}
-                    <a href="/auth/google">Google Signup</a>
-
+                    <a href="http://localhost:5000/auth/google">Google Signup</a>
+                    {/* <a href="http://localhost:5000/github">Github Signup</a> */}
+                    {/* <a href="/">Google Signup</a> */}
 
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">

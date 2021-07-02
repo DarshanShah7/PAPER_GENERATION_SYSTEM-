@@ -1,9 +1,93 @@
 const express = require("express");
 const router = express.Router();
 const cors = require('cors');
-const { User, Questiondb, Marksdb } = require('../models/user');
+const {Questiondb, Marksdb } = require('../models/user');
 var ObjectId = require('mongodb').ObjectID
 
+
+// create a new paper in database
+router.post('/create_paper', cors(), async(req, res) => {
+
+    console.log(req.body);
+    try{
+        const newpaper = await new Questiondb(req.body);
+        await newpaper.save()
+        res.send({success:true})
+    }
+    catch(err){
+        res.send({success:false})
+    }
+
+})
+
+// save a question in an existing paper
+router.post('/savequestion', cors(), (req, res) => {
+
+    console.log(req.body);
+
+    Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
+        console.log("debug1")
+        if (err) {
+            console.log(err);
+            // console.log("debug2")
+        }
+        else {
+            //  console.log(docs)
+            if (docs.length === 0) {
+                // console.log(docs)
+                const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
+                await newpaper.save();
+            }
+            let query;
+            req.body.question._id = ObjectId()
+            if (req.body.question.questiontype === 'Single-Correct') {
+                query = { $push: { SingleCorrect: req.body.question } };
+            }
+            if (req.body.question.questiontype === 'Multiple-Correct') {
+                query = { $push: { MultipleCorrect: req.body.question } };
+            }
+            if (req.body.question.questiontype === 'Numerical') {
+                query = { $push: { Numerical: req.body.question } };
+            }
+
+            let name = Questiondb.findOneAndUpdate(
+                { paper_name: req.body.paper_name },
+                query,
+                {
+                    returnNewDocument: true
+                }, function (error, result) {
+                    // console.log(error)
+                    // console.log(result)
+                }
+            )
+            // console.log(name)
+        }
+    }
+    );
+})
+
+// get question paper from using paper_name 
+// TODO : change this to paper_id because paper_name is not unique 
+router.post('/login/paper', function (req, res) {
+    console.log(req.body)
+    Questiondb.find({ paper_id: req.body.paper_id }, function (err, docs) {
+
+        res.json(docs[0]);
+        // console.log(docs)
+    });
+})
+
+// get question paper from using paper_id 
+router.post('/login/teacher-paper', function (req, res) {
+    console.log(req.body)
+    Questiondb.find({ paper_name: req.body.paper_name }, function (err, docs) {
+
+        res.json(docs[0]);
+        // console.log(docs)
+    });
+})
+
+// validate credentials entered by student before starting paper 
 router.post('/validate_paper', cors(), (req, res) => {
     console.log(req.body);
 
@@ -26,7 +110,7 @@ router.post('/validate_paper', cors(), (req, res) => {
     );
 })
 
-
+// store marks to marks database
 router.post('/store_marks', cors(), async(req, res) => {
 
     const newentry = await new Marksdb(req.body);
@@ -35,6 +119,7 @@ router.post('/store_marks', cors(), async(req, res) => {
 
 })
 
+// to show papers created by a specific teacher in teacher login 
 router.post('/paperlist', cors(), (req, res) => {
     // console.log(req.body)
     Questiondb.find({ author: req.body.user }, { _id: 0, paper_name: 1 },
@@ -44,6 +129,7 @@ router.post('/paperlist', cors(), (req, res) => {
     )
 });
 
+// to show papers attempted by a specific student in student login 
 router.post('/attemptedpaperlist', cors(), (req, res) => {
     console.log(req.body)
     Marksdb.find({ username: req.body.user }, { _id: 0, paper_id: 1 },
@@ -53,6 +139,7 @@ router.post('/attemptedpaperlist', cors(), (req, res) => {
     )
 });
 
+// teacher login : delete complete paper
 router.delete('/paperdelete', cors(), (req, res) => {
 
     Questiondb.remove({ paper_name: req.body.name },
@@ -62,6 +149,7 @@ router.delete('/paperdelete', cors(), (req, res) => {
     )
 });
 
+// teacher login : delete a particular question in a paper using question id
 router.delete('/questiondelete', cors(), (req, res) => {
     console.log("deletequestion")
     console.log(req.body)
@@ -91,7 +179,5 @@ router.delete('/questiondelete', cors(), (req, res) => {
 
     )
 });
-
-
 
 module.exports = router

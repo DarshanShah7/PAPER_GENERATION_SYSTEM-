@@ -1,111 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { User, Questiondb } = require('../models/user');
+const { User} = require('../models/user');
 const axios = require('axios')
 const mongoose = require('mongoose');
 const passport = require('passport');
 const { isLoggedIn } = require("../middleware");
 const cors = require('cors');
-// const Questiondb = require('../models/question');
 require('./github')
 require('./google')
-// mongoose.connect('mongodb://localhost/qpaper-db', { useNewUrlParser: true, useUnifiedTopology: true });
-var ObjectId = require('mongodb').ObjectID;
-const { readyException } = require("jquery");
-
-
-router.post('/create_paper', cors(), async(req, res) => {
-
-    console.log(req.body);
-    try{
-        const newpaper = await new Questiondb(req.body);
-        await newpaper.save()
-        res.send({success:true})
-    }
-    catch(err){
-        res.send({success:false})
-    }
-    // .then(savedDoc => {
-    // savedDoc === doc;
-    // }); // true
-        // Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
-        //     console.log("debug1")
-        //     if (err) {
-        //         console.log(err);
-        //         // console.log("debug2")
-        //     }
-        //     else {
-        //         //  console.log(docs)
-        //         if (docs.length === 0) {
-        //             // console.log(docs)
-        //                     const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
-        //                     await newpaper.save().then(savedDoc => {
-        //   savedDoc === doc; // true
-            // });;
-    //         }
-
-    //     }
-    // }
-    // );
-
-})
-
-
-router.post('/savequestion', cors(), (req, res) => {
-    const customers = [
-        { id: 1, firstName: 'John', lastName: 'Doe' },
-        { id: 2, firstName: 'Brad', lastName: 'Traversy' },
-        { id: 3, firstName: 'Mary', lastName: 'Swanson' },
-    ];
-
-    console.log(req.body);
-
-    Questiondb.find({ paper_name: req.body.paper_name }, async function (err, docs) {
-        console.log("debug1")
-        if (err) {
-            console.log(err);
-            // console.log("debug2")
-        }
-        else {
-            //  console.log(docs)
-            if (docs.length === 0) {
-                // console.log(docs)
-                const newpaper = await new Questiondb({ paper_name: req.body.paper_name });
-                await newpaper.save();
-            }
-            let query;
-            req.body.question._id = ObjectId()
-            if (req.body.question.questiontype === 'Single-Correct') {
-                query = { $push: { SingleCorrect: req.body.question } };
-            }
-            if (req.body.question.questiontype === 'Multiple-Correct') {
-                query = { $push: { MultipleCorrect: req.body.question } };
-            }
-            if (req.body.question.questiontype === 'Numerical') {
-                query = { $push: { Numerical: req.body.question } };
-            }
-
-            let name = Questiondb.findOneAndUpdate(
-                { paper_name: req.body.paper_name },
-                query,
-                {
-                    returnNewDocument: true
-                }, function (error, result) {
-                    // console.log(error)
-                    // console.log(result)
-                }
-            )
-            // console.log(name)
-        }
-    }
-    );
-
-
-
-    res.json(customers);
-})
-
-// app.use(cors());
 
 router.post('/signup', cors(), async (req, res, next) => {
     console.log(req.body);
@@ -131,16 +33,8 @@ router.post('/signup', cors(), async (req, res, next) => {
 
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
-
-    // req.flash('success', "Goodbye!");
-    // // res.send("LOGGED OUT");
-    // res.redirect('/');
-    const customers = [
-        { id: 1, firstName: 'John', lastName: 'Doe' },
-        { id: 2, firstName: 'Brad', lastName: 'Traversy' },
-    ];
     console.log(req.body);
-    res.json(customers);
+    res.json({"logout":"done"});
 })
 
 // app.get('/login', function(req, res, next) {
@@ -170,23 +64,6 @@ router.post('/login', cors(), (req, res, next) => {
 
 })
 
-router.post('/login/paper', function (req, res) {
-    console.log(req.body)
-    Questiondb.find({ paper_id: req.body.paper_id }, function (err, docs) {
-
-        res.json(docs[0]);
-        // console.log(docs)
-    });
-})
-
-router.post('/login/teacher-paper', function (req, res) {
-    console.log(req.body)
-    Questiondb.find({ paper_name: req.body.paper_name }, function (err, docs) {
-
-        res.json(docs[0]);
-        // console.log(docs)
-    });
-})
 
 // const clientID = '30a5e62205199f98fec1'
 // const clientSecret = '75682d11016eaa69d85720e369df0881ebdba12c'
