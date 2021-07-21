@@ -34,4 +34,16 @@ const marksSchema = new mongoose.Schema({
     marks:Number
 });
 const Marksdb = mongoose.model('mark', marksSchema);
-module.exports = {User, Questiondb, Marksdb}
+
+const imageSchema = new mongoose.Schema({
+    user: String,
+    paper_id: String,
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
+});
+const Imagedb = mongoose.model('Image', imageSchema);
+
+module.exports = {User, Questiondb, Marksdb, Imagedb}

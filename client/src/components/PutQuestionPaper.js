@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import PutQuestion from './Put_question';
 import { Redirect } from "react-router-dom";
 import QuestionPanel from './questionPanel.jsx';
-
+import Webcam from "react-webcam";
 class PutQuestionPaper extends Component {
     constructor(props) {
         super(props)
@@ -101,12 +101,36 @@ class PutQuestionPaper extends Component {
                 console.log(error)
             });
 
-        
+
         this.setState({ redirect: true })
         console.log(totalmarks)
 
 
     }
+
+    videoConstraints = {
+        width: 300,
+        height: 200,
+        facingMode: "user"
+    };
+    setRef = webcam => {
+        this.webcam = webcam;
+    };
+
+    capture = () => {
+        const imageSrc = this.webcam.getScreenshot();
+        console.log(imageSrc)
+        axios.post('http://localhost:5000/save_image', { user: this.props.match.params.user, paper_id: this.props.match.params.paper_id, img: imageSrc })
+            .then(async (res) => {
+                console.log(res.data)
+                console.log("inside axios")
+                // this.setState({ load_paper: true })
+
+            }).catch((error) => {
+                console.log(error)
+            });
+
+    };
 
     render() {
         return (
@@ -127,8 +151,23 @@ class PutQuestionPaper extends Component {
                 </div>
                 <div style={{ display: "flex" }} onContextMenu={this.handleclick} onCopy={this.handlerCopy}>
                     {this.state.load_paper &&
-                        <div>
-                            <QuestionPanel set_count={this.set_count} />
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <div>
+                                <QuestionPanel set_count={this.set_count} />
+                            </div>
+                            <div>
+                                <Webcam
+                                    audio={false}
+                                    height={200}
+                                    ref={this.setRef}
+                                    screenshotFormat="image/jpeg"
+                                    width={300}
+                                    videoConstraints={this.videoConstraints}
+                                />
+                                <div>
+                                    <button onClick={this.capture}>Capture photo</button>
+                                </div>
+                            </div>
                         </div>
                     }
                     {/* {console.log("rerender")} */}

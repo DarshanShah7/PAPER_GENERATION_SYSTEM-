@@ -6,6 +6,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const userRoutes = require('./routes/users'); //for router
 const qpaperRoutes = require('./routes/qpaper');
+const cameraRoutes = require('./routes/camera');
 const cors = require('cors');
 
 
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
     // router 
 app.use('/', userRoutes);
 app.use('/', qpaperRoutes);
+app.use('/', cameraRoutes);
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 })
