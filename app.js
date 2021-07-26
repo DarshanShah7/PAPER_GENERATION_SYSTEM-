@@ -47,6 +47,7 @@ mongoose.connect('mongodb://localhost/login-db', { useNewUrlParser: true, useUni
 app.use('/static', express.static('static')) // For serving static files
     // app.use('/jsfiles', express.static('jsfiles'))
 
+//required when using req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // for authentication using passport 

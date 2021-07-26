@@ -180,4 +180,16 @@ router.delete('/questiondelete', cors(), (req, res) => {
     )
 });
 
+// store marks to marks database
+router.get('/get_marks', cors(), async(req, res) => {
+
+    Marksdb.find({ paper_id: req.body.paper_id },
+        function (err, docs) {
+            res.json(docs)
+        }
+    )
+
+
+})
+
 module.exports = router

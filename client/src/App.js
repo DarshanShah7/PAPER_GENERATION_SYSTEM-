@@ -10,6 +10,8 @@ import CreateNewTest from './components/createNewTest';
 import Editqp from './components/Editqp';
 import TeacherLogin from './components/teacherLogin';
 import StudentLogin from './components/studentLogin';
+import PhotoCard from './components/PhotoCard';
+// import Chart from './components/Chart'
 import {
   BrowserRouter as Router,
   Switch,
@@ -86,6 +88,10 @@ class App extends Component {
 
             <Route exact path="/login/:user/:id/add_questions" component={Question}>
             </Route>
+            <Route exact path="/login/:user/view" component={PhotoCard } >
+            </Route>
+            {/* <Route exact path="/login/:user/analysis" component={() => <Chart   />} >
+            </Route> */}
             <Route exact path="/login/:user/new_test" component={CreateNewTest}>
             </Route>
             <Route exact path="/login/:user/:id/edit" component={Editqp}>

@@ -40,8 +40,9 @@ const imageSchema = new mongoose.Schema({
     paper_id: String,
     img:
     {
-        data: Buffer,
-        contentType: String
+        filename:String,
+        contentType: String,
+        flag:Boolean
     }
 });
 const Imagedb = mongoose.model('Image', imageSchema);
