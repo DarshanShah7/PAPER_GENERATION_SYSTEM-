@@ -11,7 +11,7 @@ import Editqp from './components/Editqp';
 import TeacherLogin from './components/teacherLogin';
 import StudentLogin from './components/studentLogin';
 import PhotoCard from './components/PhotoCard';
-// import Chart from './components/Chart'
+import Chart from './components/Chart'
 import {
   BrowserRouter as Router,
   Switch,
@@ -74,7 +74,8 @@ class App extends Component {
             </Route> */}
             <Route exact path="/student/:user/paper/:paper_id" component={PutQuestionPaper} >
             </Route>
-
+            <Route exact path="/student/:user/paper/:paper_id/analysis" component={Chart} >
+            </Route>
             <Route exact path="/student/:user" component={StudentLogin} >
             </Route>
 
@@ -90,8 +91,7 @@ class App extends Component {
             </Route>
             <Route exact path="/login/:user/view" component={PhotoCard } >
             </Route>
-            {/* <Route exact path="/login/:user/analysis" component={() => <Chart   />} >
-            </Route> */}
+            
             <Route exact path="/login/:user/new_test" component={CreateNewTest}>
             </Route>
             <Route exact path="/login/:user/:id/edit" component={Editqp}>

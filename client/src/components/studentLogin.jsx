@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect,Link } from "react-router-dom";
 
 class StudentLogin extends Component {
   constructor(props){
@@ -119,8 +119,10 @@ class StudentLogin extends Component {
                   <b>{Paper.paper_id}</b>
                 </td>
                 <td>
-                  
-                  <button className="btn btn-success btn-sm m-2">Review</button>
+                    <Link to={'/student/' + this.props.match.params.user + '/paper/' + Paper.paper_id + '/analysis'}>
+                        <Button className="btn btn-success btn-sm m-2">Review</Button>
+                    </Link>
+                  {/* <button className="btn btn-success btn-sm m-2">Review</button> */}
                 </td>
                 {/* <td>
                   

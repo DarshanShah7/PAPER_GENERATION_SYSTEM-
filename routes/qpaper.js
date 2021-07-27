@@ -1,21 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const cors = require('cors');
-const {Questiondb, Marksdb } = require('../models/user');
-var ObjectId = require('mongodb').ObjectID
+const { Questiondb, Marksdb } = require('../models/user');
+var ObjectId = require('mongodb').ObjectID;
+const { Minimum, Maximum, data } = require("@tensorflow/tfjs");
 
 
 // create a new paper in database
-router.post('/create_paper', cors(), async(req, res) => {
+router.post('/create_paper', cors(), async (req, res) => {
 
     console.log(req.body);
-    try{
+    try {
         const newpaper = await new Questiondb(req.body);
         await newpaper.save()
-        res.send({success:true})
+        res.send({ success: true })
     }
-    catch(err){
-        res.send({success:false})
+    catch (err) {
+        res.send({ success: false })
     }
 
 })
@@ -111,12 +112,85 @@ router.post('/validate_paper', cors(), (req, res) => {
 })
 
 // store marks to marks database
-router.post('/store_marks', cors(), async(req, res) => {
+router.post('/store_marks', cors(), async (req, res) => {
 
     const newentry = await new Marksdb(req.body);
     await newentry.save()
     res.send({ success: true })
 
+})
+
+router.post('/analysis', cors(), (req, res) => {
+    let Minimum
+    let Maximum
+    let Average
+    
+
+    Marksdb.aggregate( [{ $match: { paper_id: req.body.paper_id } } ,{ $group: { _id: "$paper_id", Average: { $avg: "$totalmarks" } } } ],
+    function (err, docs) {
+        // console.log("debug1")
+        if (err) {
+            console.log(err);
+            // console.log("debug2")
+        }
+        else {
+            Average = docs[0].Average
+            // console.log(docs)
+
+        }
+    }
+    );
+
+    Marksdb.aggregate( [{ $match: { paper_id: req.body.paper_id } } ,{ $group: { _id: "$paper_id", Minimum: { $min: "$totalmarks" } } } ],
+    function (err, docs) {
+        // console.log("debug1")
+        if (err) {
+            console.log(err);
+            // console.log("debug2")
+        }
+        else {
+            Minimum = docs[0].Minimum
+            // console.log(docs)
+
+        }
+    }
+    );
+
+    Marksdb.aggregate( [{ $match: { paper_id: req.body.paper_id } } ,{ $group: { _id: "$paper_id", Maximum: { $max: "$totalmarks" } } } ],
+    function (err, docs) {
+        // console.log("debug1")
+        if (err) {
+            console.log(err);
+            // console.log("debug2")
+        }
+        else {
+            Maximum = docs[0].Maximum
+            Marksdb.find({ paper_id: req.body.paper_id,username:req.body.user }, async function (err, docs) {
+                // console.log("debug1")
+                if (err) {
+                    console.log(err);
+                    // console.log("debug2")
+                }
+                else {
+                    let data = {}
+                    data.total = docs[0].totalmarks
+                    data.total_sc = docs[0].totalmarks_sc
+                    data.total_mc = docs[0].totalmarks_mc
+                    data.total_n = docs[0].totalmarks_n
+                    data.min = Minimum
+                    data.max = Maximum
+                    data.avg = Average
+                    // console.log(data)
+                    res.send(data)
+                }
+            }
+        
+            );
+            
+
+        }
+    }
+    );
 })
 
 // to show papers created by a specific teacher in teacher login 
@@ -181,7 +255,7 @@ router.delete('/questiondelete', cors(), (req, res) => {
 });
 
 // store marks to marks database
-router.get('/get_marks', cors(), async(req, res) => {
+router.get('/get_marks', cors(), async (req, res) => {
 
     Marksdb.find({ paper_id: req.body.paper_id },
         function (err, docs) {

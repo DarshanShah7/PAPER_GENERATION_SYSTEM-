@@ -77,6 +77,9 @@ class PutQuestionPaper extends Component {
     }
 
     SubmitPaper() {
+        let totalmarks_mc = 0
+        let totalmarks_sc = 0
+        let totalmarks_n = 0
         let totalmarks = 0
         for (let i = 0; i < this.user_answers.length; i++) {
             if (this.user_answers[i] === undefined)
@@ -84,14 +87,21 @@ class PutQuestionPaper extends Component {
             if (this.paper_questions[i].questiontype === "Multiple-Correct") {
 
                 if (this.user_answers[i].a.toString() == this.paper_questions[i].ans.a && this.user_answers[i].b.toString() == this.paper_questions[i].ans.b && this.user_answers[i].c.toString() == this.paper_questions[i].ans.c && this.user_answers[i].d.toString() == this.paper_questions[i].ans.d)
-                    totalmarks += parseInt(this.paper_questions[i].marks, 10)
+                    totalmarks_mc += parseInt(this.paper_questions[i].marks, 10)
             }
             else {
-                if (this.user_answers[i] == this.paper_questions[i].ans)
-                    totalmarks += parseInt(this.paper_questions[i].marks, 10)
+                if (this.user_answers[i] == this.paper_questions[i].ans) {
+                    if (this.paper_questions[i].questiontype === "Single-Correct")
+                        totalmarks_sc += parseInt(this.paper_questions[i].marks, 10)
+
+                    if (this.paper_questions[i].questiontype === "Numerical")
+                        totalmarks_n += parseInt(this.paper_questions[i].marks, 10)
+
+                }
+                totalmarks = totalmarks_mc + totalmarks_n + totalmarks_sc;
             }
         }
-        axios.post('http://localhost:5000/store_marks', { username: this.props.match.params.user, paper_id: this.props.match.params.paper_id, marks: totalmarks })
+        axios.post('http://localhost:5000/store_marks', { username: this.props.match.params.user, paper_id: this.props.match.params.paper_id, totalmarks: totalmarks, totalmarks_sc: totalmarks_sc, totalmarks_mc: totalmarks_mc, totalmarks_n: totalmarks_n })
             .then(async (res) => {
                 console.log(res.data)
                 console.log("inside axios")

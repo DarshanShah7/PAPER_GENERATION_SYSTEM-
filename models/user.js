@@ -31,7 +31,11 @@ const Questiondb = mongoose.model('Question', questionSchema);
 const marksSchema = new mongoose.Schema({
     username: String,
     paper_id: String,
-    marks:Number
+    totalmarks:Number,    
+    totalmarks_sc:Number,
+    totalmarks_mc:Number,
+    totalmarks_n:Number
+
 });
 const Marksdb = mongoose.model('mark', marksSchema);
 

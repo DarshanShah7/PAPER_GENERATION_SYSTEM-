@@ -19,19 +19,20 @@ class TeacherLogin extends Component {
       loaded: false
       
     };
+    this.array = []
     this.user = this.props.match.params.user
     axios.post("http://localhost:5000/paperlist", { user: this.user }).then(async(res) => {
       // console.log(res.data);
-      let array = []
+      // let array = []
       for(let i=0; i<res.data.length;i++){
-        array.push({paper:res.data[i].paper_name, paperId : i+1})
+        this.array.push({paper:res.data[i].paper_name, paperId : i+1})
        
       }
       
-      this.setState({PapersList:array},()=>
+      this.setState({PapersList:this.array},()=>
         {
           console.log(this.state.PapersList)
-          this.setState(...this.state, {loaded:true})
+          this.setState({loaded:true})
           
         }
         
