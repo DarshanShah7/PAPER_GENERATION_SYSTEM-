@@ -92,7 +92,7 @@ class Chart extends Component {
 
   render() {
     return (
-      <div className="chart">
+      <div className="chart" style={{width:"800px"}}>
         <Tabs
           defaultActiveKey="Attempt summary"
           transition={false}
@@ -139,6 +139,7 @@ class Chart extends Component {
             {/* <Sonnet /> */}
           </Tab>
           <Tab eventKey="Category analysis" title="Category analysis">
+          <div  style={{width:"400px"}}>
             <Pie
               data={this.state.chartData_pie}
               options={{
@@ -153,6 +154,7 @@ class Chart extends Component {
                 },
               }}
             />
+          </div>
             {/* <Sonnet /> */}
           </Tab>
         </Tabs>

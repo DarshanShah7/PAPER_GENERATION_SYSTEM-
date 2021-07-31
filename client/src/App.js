@@ -36,6 +36,7 @@ class App extends Component {
   logout = () => {
     this.setState({ isloggedin: false, username: "" });
     alert("logged out succesfully");
+    {/* // :<Redirect  to='/' />} */}
 
   }
 
@@ -55,6 +56,9 @@ class App extends Component {
             </Route>
             {/* {this.state.isloggedin ? */}
             <Route path="/login/:user" >
+              <Header2 logout={this.logout} loginstatus={this.loginstatus} />
+            </Route>
+            <Route path="/student" >
               <Header2 logout={this.logout} loginstatus={this.loginstatus} />
             </Route>
             {/* // :<Redirect  to='/' />} */}
