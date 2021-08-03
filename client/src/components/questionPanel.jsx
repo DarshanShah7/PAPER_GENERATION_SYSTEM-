@@ -35,26 +35,29 @@ class QuestionPanel extends Component {
     return (
       <div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {this.getQuestionGird(this.Questions).map((questionRow,i) =>(
-            <div className="questionRow" style={{display:"flex" , flexDirection: "row"}}>
-               {questionRow.map((question,j) => (
-              <div className="questionCard"  style={{display:"flex"}}>
-              {/* <a href={"#question".concat(i+j)}> */}
-              <button onClick={()=>this.props.set_count(question.num)} >
-              {/* <button onClick={()=>console.log(question.num)} > */}
+          {this.getQuestionGird(this.Questions).map((questionRow, i) => (
+            <div
+              className="questionRow"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
+              {questionRow.map((question, j) => (
+                <div className="questionCard" style={{ display: "flex" }}>
+                  {/* <a href={"#question".concat(i+j)}> */}
+                  {/* <button onClick={() => this.props.set_count(question.num)}> */}
+                  {/* <button onClick={()=>console.log(question.num)} > */}
 
-                <Card
-                  bg={question.status}
-                  key={question.num}
-                  text="white"
-                  style={this.styles}
-                >
-                  <div>{question.num}</div>
-                </Card>
-              </button>
-            </div>
-            )
-          )}
+                  <Card
+                    bg={question.status}
+                    key={question.num}
+                    text="white"
+                    style={this.styles}
+                    onClick={() => this.props.set_count(question.num)}
+                  >
+                    <div>{question.num}</div>
+                  </Card>
+                  {/* </button> */}
+                </div>
+              ))}
             </div>
           ))}
           {/* {this.Questions.map((question) => (
