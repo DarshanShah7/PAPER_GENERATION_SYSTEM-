@@ -159,7 +159,7 @@ class Header extends Component {
 
                     </button>
                     {/* <button onClick={this.googleAuth} >Sign Up google</button> */}
-                    <a href="http://localhost:5000/auth/google">Google Signup</a>
+                    {/* <a href="http://localhost:5000/auth/google">Google Signup</a> */}
                     {/* <a href="http://localhost:5000/github">Github Signup</a> */}
                     {/* <a href="/">Google Signup</a> */}
 

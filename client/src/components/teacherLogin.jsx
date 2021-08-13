@@ -72,7 +72,7 @@ class TeacherLogin extends Component {
           className="TeacherMenu"
           style={{ display: "flex", placeContent: "center" }}
         >
-          <div>This is left Part</div>
+          
           <div style={{ display: "grid", placeContent: "center" }}>
             <TeacherMenu
               PapersList={this.state.PapersList}
@@ -80,9 +80,9 @@ class TeacherLogin extends Component {
               user ={this.user}
             />
           </div>
-          <div style={{ margin: "30px", marginTop: "80px" }}>
+          <div style={{ margin: "10px" }}>
             <Card style={{ width: "20rem" }}>
-              <Card.Img variant="top" src={CreateTestImg} />
+              <Card.Img variant="top" src={CreateTestImg} style={{height:'300px'}}/>
               <Card.Body>
                 <Card.Title>
                   <h2>Create a New Test</h2>

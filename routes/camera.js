@@ -100,8 +100,10 @@ router.get('/image', async (req, res, next) => {
                         var a ={
                             details:docs[i],
                             image:array[i],
-                            time: docs[i]._id.getTimestamp()
+                            time: docs[i]._id.getTimestamp(),
+                            flag: docs[i].img.flag
                         }
+                        console.log(docs[i].img.flag)
                         results.push(a)
                     //   docs[i].image = array[i] ;
                     //   console.log(a)

@@ -3,6 +3,10 @@ import Carousel from "react-bootstrap/Carousel";
 import DataAnalysisImg from "./data analysis.jpg";
 import PlatformImg from "./platform1.jpg";
 import GeneticAlgoImg from "./genetic algorithm.jpg";
+import SS1 from "./ss1.jpeg";
+import SS2 from "./ss2.jpeg";
+import SS3 from "./ss3.jpeg";
+import SS4 from "./ss4.jpeg";
 class Carousel1 extends Component {
   state = {};
   render() {
@@ -18,7 +22,6 @@ class Carousel1 extends Component {
             />
             <Carousel.Caption>
               <h3 className="primary">Real-time Data Analysis</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -31,7 +34,6 @@ class Carousel1 extends Component {
 
             <Carousel.Caption>
               <h3>All in one Platform for Exams</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>

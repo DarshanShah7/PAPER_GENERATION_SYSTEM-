@@ -17,6 +17,7 @@ class PhotoCard extends Component {
       axios.get('http://localhost:5000/image')
             .then(async (res) => {
                 this.array = res.data
+                console.log(res.data)
                 this.setState({load_paper:true})
 
             }).catch((error) => {
@@ -39,7 +40,7 @@ class PhotoCard extends Component {
           {this.array.map((obj, idx) => (
             
             <Col style={{ marginBottom: "25px" }}>
-              <Card>
+              <Card bg={obj.flag==true?"danger":"light"} >
                 {/* {console.log(obj.time.match(/\d\d:\d\d/)[0])} */}
                 <Card.Img
                   variant="top"
@@ -48,7 +49,8 @@ class PhotoCard extends Component {
                 />
                 <Card.Body style={{ width: "300px" }}>
                   <Card.Title>Card title</Card.Title>
-                  <Card.Text>
+                  <Card.Text >
+                    {console.log(obj.flag)}
                     user : {obj.details.user} 
                     <br></br>
                     paper : {obj.details.paper_id}

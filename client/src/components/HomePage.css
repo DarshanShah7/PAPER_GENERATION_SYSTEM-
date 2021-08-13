@@ -1,0 +1,47 @@
+#homePage {
+  background-color: rgba(226, 225, 156, 0.418);
+  height: 100%;
+  margin: 10px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+#home {
+  height: 400px;
+  width: 800px;
+  display: flex;
+  margin: auto;
+  margin-left: 300px;
+  margin-bottom: 20px;
+}
+
+#header {
+  height: 200px;
+  border-radius: 80px;
+  margin: 20px;
+  width: 1000px;
+}
+
+#header1 {
+  font-size: 250px;
+  color: rgb(251, 255, 0);
+  font-family: "Rajdhani", sans-serif;
+}
+
+#EQ {
+  font-size: 60px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bolder;
+}
+
+.feature1 {
+  margin: 20px;
+  font-size: 30px;
+  border-radius: 40px;
+  /* width: 1000px; */
+  display: flex;
+  color: white;
+  width: 70%;
+  margin-bottom: 40px;
+  /* background-color: rgba(147, 147, 252, 0.301); */
+}

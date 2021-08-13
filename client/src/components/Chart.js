@@ -92,6 +92,7 @@ class Chart extends Component {
 
   render() {
     return (
+      <center>
       <div className="chart" style={{width:"800px"}}>
         <Tabs
           defaultActiveKey="Attempt summary"
@@ -119,25 +120,28 @@ class Chart extends Component {
                 responsive: true,
               }}
             />
-            {/* <Sonnet /> */}
+            {/* <Sonnet /> */
+          //   <Tab eventKey="profile" title="Profile">
+          //   <Line
+          //     data={this.state.chartData}
+          //     options={{
+          //       title: {
+          //         display: this.props.displayTitle,
+          //         text: "Largest Cities In " + this.props.location,
+          //         fontSize: 25,
+          //       },
+          //       legend: {
+          //         display: this.props.displayLegend,
+          //         position: this.props.legendPosition,
+          //       },
+          //     }}
+          //   />
+          //   {/* <Sonnet /> */}
+          // </Tab>
+            }
           </Tab>
-          <Tab eventKey="profile" title="Profile">
-            <Line
-              data={this.state.chartData}
-              options={{
-                title: {
-                  display: this.props.displayTitle,
-                  text: "Largest Cities In " + this.props.location,
-                  fontSize: 25,
-                },
-                legend: {
-                  display: this.props.displayLegend,
-                  position: this.props.legendPosition,
-                },
-              }}
-            />
-            {/* <Sonnet /> */}
-          </Tab>
+          
+          
           <Tab eventKey="Category analysis" title="Category analysis">
           <div  style={{width:"400px"}}>
             <Pie
@@ -159,6 +163,7 @@ class Chart extends Component {
           </Tab>
         </Tabs>
       </div>
+      </center>
     );
   }
 }
